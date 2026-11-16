@@ -318,16 +318,16 @@ const MATCHES = [
    ["Twickenham",1,["twickenham stadium","twickers","hq","allianz stadium"],"1991, 2015"],["Stade de France",1,["sdf","paris","saint denis","st denis"],"2007, 2023"],["Eden Park",1,["eden","auckland"],"1987, 2011"],
    ["Ellis Park",2,["ellis","johannesburg","emirates airline park","coca cola park"],"1995"],["Millennium Stadium",2,["millennium","principality","principality stadium","cardiff"],"1999"],
    ["Stadium Australia",4,["telstra","accor","homebush","telstra stadium","accor stadium","anz stadium","sydney olympic stadium"],"2003"],["International Stadium Yokohama",4,["yokohama","nissan","nissan stadium"],"2019"]]},
-  {id:"beat-all-blacks", q:"Name a nation that has beaten the All Blacks", s:"Men's Tests, up to the end of 2025", a:[
-   ["South Africa",1,["springboks","sa","rsa","bokke"]],["Australia",1,["wallabies","aus"]],
-   ["England",2,["eng"]],["France",2,["les bleus"]],["Ireland",2,[],"First win: Chicago, 2016"],
-   ["Argentina",4,["pumas","los pumas"],"First win: 2020"],
-   ["Wales",6,["welsh"],"Last did it in 1953"]]}
+  {id:"ecc-runners-up", q:"Name a club that has lost a Heineken / Champions Cup final but never won one", s:"Finals from 1996 to 2025", a:[
+   ["Clermont",1,["clermont auvergne","asm","montferrand"],"Lost three finals"],["Racing 92",1,["racing","racing metro"],"Lost three finals"],["Stade Français",2,["stade francais","paris"],"2001 and 2005"],
+   ["Biarritz",4,["biarritz olympique"],"2006 and 2010"],["Cardiff",4,["cardiff rfc","cardiff blues"],"The first final, 1996"],["Perpignan",6,["usap"],"2003"],["Colomiers",6,[],"1999"]]}
  ],
  [ // ---------- MATCH B ----------
-  {id:"rwc-semis", q:"Name a country that has reached a men's Rugby World Cup semi-final", s:"The last four, 1987–2023", a:[
-   ["New Zealand",1,["nz","all blacks"]],["South Africa",1,["sa","rsa","springboks"]],["England",1,["eng"]],["Australia",1,["aus","wallabies"]],
-   ["France",2,["les bleus"]],["Wales",2,["welsh"],"1987, 2011, 2019"],["Argentina",4,["pumas","los pumas"],"2007, 2015, 2023"],["Scotland",6,["scots"],"1991"]]},
+  {id:"6n-win-coaches", q:"Name a head coach who has won the men's Six Nations", s:"Championship-winning coaches, 2000–2025", people:true, a:[
+   ["Warren Gatland",1,["gatland","gats"],"Wales: 2008, 2012 and 2019"],["Eddie Jones",1,["eddie"],"England: 2016, 2017 and 2020"],["Andy Farrell",1,["farrell"],"Ireland: 2023 and 2024"],
+   ["Clive Woodward",2,["woodward","sir clive"],"England: 2000, 2001 and 2003"],["Joe Schmidt",2,["schmidt"],"Ireland: 2014, 2015 and 2018"],["Fabien Galthié",2,["galthie","fabien galthie"],"France: 2022 and 2025"],
+   ["Martin Johnson",4,["johnno"],"England: 2011"],["Declan Kidney",4,["kidney"],"Ireland: 2009"],["Wayne Pivac",4,["pivac"],"Wales: 2021"],["Bernard Laporte",4,["laporte"],"France: four titles"],
+   ["Mike Ruddock",6,["ruddock"],"Wales: 2005"],["Marc Lièvremont",6,["lievremont","marc lievremont"],"France: 2010"],["Rob Howley",6,["howley"],"Wales: 2013, as interim coach"]]},
   {id:"rwc-captains", q:"Name a captain who has lifted the men's Rugby World Cup", s:"Winning captains, 1987–2023", people:true, a:[
    ["Richie McCaw",1,["mccaw","richard mccaw"],"2011, 2015"],["Martin Johnson",1,["johnson","johnno"],"2003"],["Siya Kolisi",1,["kolisi"],"2019, 2023"],["Francois Pienaar",1,["pienaar","françois pienaar"],"1995"],
    ["John Eales",2,["eales","nobody"],"1999"],["John Smit",2,["smit"],"2007"],["Nick Farr-Jones",4,["farr jones","farr-jones","nick farr jones"],"1991"],["David Kirk",6,["kirk"],"The first, in 1987"]]},
@@ -356,17 +356,14 @@ const MATCHES = [
    ["Stade de la Beaujoire",6,["beaujoire","nantes"]],["Stade Geoffroy-Guichard",6,["geoffroy guichard","saint etienne","st etienne"]]]}
  ],
  [ // ---------- MATCH C ----------
-  {id:"positions", q:"Name a position in a rugby union team", s:"The 15 shirts · general or specific names both count", a:[
-   ["Fly-half",1,["fly half","flyhalf","stand off","stand-off","standoff","outside half","number 10","10"]],["Hooker",1,[]],["Prop",1,[]],["Scrum-half",1,["scrum half","scrumhalf","half back","halfback"]],
-   ["Wing",2,["winger","left wing","right wing"]],["Full-back",2,["fullback","full back"]],["Lock",2,["second row","second rower","lock forward"]],["Flanker",2,["wing forward"]],
-   ["Number Eight",2,["number 8","no 8","8","eighth man"]],["Centre",2,["center"]],
-   ["Loosehead Prop",4,["loosehead","loose head","loose-head prop"]],["Tighthead Prop",4,["tighthead","tight head","tight-head prop"]],
-   ["Openside Flanker",4,["openside","open side","fetcher"]],["Blindside Flanker",4,["blindside","blind side"]],
-   ["Inside Centre",6,["inside center","second five eighth"]],["Outside Centre",6,["outside center"]]]},
-  {id:"rwc-hosts", q:"Name a country that has hosted men's Rugby World Cup matches", s:"Hosts and co-hosts, 1987–2023", vague:["uk","united kingdom","britain","great britain"], a:[
-   ["New Zealand",1,["nz"],"1987, 2011"],["England",1,["eng"],"1991, 2015, and matches in 1999"],["France",1,[],"2007, 2023, and matches in 1991 and 1999"],
-   ["Australia",2,["aus"],"1987, 2003"],["South Africa",2,["sa","rsa"],"1995"],["Japan",2,[],"2019"],
-   ["Wales",4,["welsh"],"The main host in 1999"],["Scotland",6,["scots"],"1991, 1999, 2007"],["Ireland",6,[],"1991, 1999"]]},
+  {id:"ire-2018", q:"Name a player in Ireland's starting XV for the 2018 Grand Slam decider", s:"v England, Twickenham, 17 March 2018 · starters only", people:true, a:[
+   ["Johnny Sexton",1,["sexton","jonathan sexton","jonny sexton"]],["Conor Murray",1,["murray"]],["Rory Best",2,["best"],"Captain"],["Tadhg Furlong",2,["furlong"]],["Peter O'Mahony",2,["omahony","o mahony","peter omahony"]],
+   ["Rob Kearney",2,["kearney"]],["Keith Earls",4,["earls"]],["Garry Ringrose",4,["ringrose","gary ringrose"]],["Bundee Aki",4,["aki"]],["Jacob Stockdale",4,["stockdale"],"Scored his seventh try of the championship"],
+   ["Cian Healy",4,["healy"]],["CJ Stander",4,["stander","c j stander"]],["James Ryan",4,["ryan"]],["Iain Henderson",6,["henderson"]],["Dan Leavy",6,["leavy"]]]},
+  {id:"lions-coaches", q:"Name a British & Irish Lions head coach", s:"Head coaches of Lions tours, 1971–2025", people:true, a:[
+   ["Warren Gatland",1,["gatland","gats"],"2013, 2017 and 2021"],["Andy Farrell",1,["farrell"],"2025"],["Ian McGeechan",2,["mcgeechan","geech","sir ian"],"1989, 1993, 1997 and 2009"],
+   ["Clive Woodward",2,["woodward","sir clive"],"2005"],["Graham Henry",4,["henry"],"2001"],["Carwyn James",4,["carwyn"],"1971, the only series win in New Zealand"],
+   ["Jim Telfer",6,["telfer"],"1983"],["Syd Millar",6,["millar"],"1974"],["John Dawes",6,["dawes"],"1977"],["Noel Murphy",6,["murphy"],"1980"]]},
   {id:"urc", q:"Name a team in the United Rugby Championship in 2024–25", s:"All 16 teams, across Ireland, Wales, Scotland, Italy and South Africa", a:[
    ["Leinster",1,[]],["Munster",1,[]],["Ulster",1,[]],
    ["Connacht",2,[]],["Glasgow Warriors",2,["glasgow","warriors"]],["Cardiff",2,["cardiff rugby"]],["Ospreys",2,[]],["Scarlets",2,[]],["Bulls",2,["blue bulls"]],["Sharks",2,["natal sharks"]],["Stormers",2,[]],
@@ -401,9 +398,11 @@ const MATCHES = [
    ["Bordeaux-Bègles",2,["bordeaux","ubb","bordeaux begles","begles"]],["Clermont",2,["clermont auvergne","asm"]],["Stade Français",2,["stade francais","paris"]],
    ["Montpellier",4,[]],["Castres",4,[]],["Lyon",4,["lou"]],["Perpignan",4,["usap"]],["Bayonne",4,["aviron bayonnais"]],
    ["Pau",6,["section paloise"]],["Vannes",6,[],"Their first season in the top flight"]]},
-  {id:"rwc23-qf", q:"Name a team that reached the quarter-finals of the 2023 World Cup", s:"Men's Rugby World Cup, France 2023", a:[
-   ["South Africa",1,["sa","rsa","springboks"]],["New Zealand",1,["nz","all blacks"]],["France",1,[]],["Ireland",1,[]],
-   ["England",2,[]],["Wales",2,[]],["Argentina",4,["pumas"]],["Fiji",6,[]]]},
+  {id:"rwc-final-9s", q:"Name a scrum-half who has started a men's Rugby World Cup final", s:"Starting number 9s in every final, 1987–2023", people:true, a:[
+   ["Faf de Klerk",1,["de klerk","faf"],"2019 and 2023"],["Aaron Smith",1,[],"2015 and 2023"],["George Gregan",2,["gregan"],"1999 and 2003"],["Matt Dawson",2,["dawson"],"2003"],
+   ["Ben Youngs",2,["youngs"],"2019"],["Joost van der Westhuizen",2,["van der westhuizen","westhuizen","joost"],"1995"],["Fourie du Preez",4,["du preez","fourie"],"2007"],
+   ["Will Genia",4,["genia"],"2015"],["Piri Weepu",4,["weepu"],"2011"],["Nick Farr-Jones",4,["farr-jones","farr jones"],"1991"],["Fabien Galthié",4,["galthie","fabien galthie"],"1999"],
+   ["Dimitri Yachvili",6,["yachvili"],"2011"],["Andy Gomarsall",6,["gomarsall"],"2007"],["David Kirk",6,["kirk"],"1987"],["Graeme Bachop",6,["bachop"],"1995"],["Richard Hill",6,["hill"],"1991"],["Pierre Berbizier",6,["berbizier"],"1987"]]},
   {id:"rwc-top-points", q:"Name the top points scorer at a men's Rugby World Cup", s:"The leading scorer at each tournament, 1987–2023", people:true, a:[
    ["Jonny Wilkinson",1,["wilko","johnny wilkinson"],"2003"],["Handré Pollard",2,["pollard","handre pollard","handre"],"2019"],["Owen Farrell",2,["farrell"],"2023"],
    ["Percy Montgomery",4,["montgomery"],"2007"],["Grant Fox",4,["fox"],"1987"],["Morné Steyn",4,["steyn","morne steyn","morne"],"2011"],
@@ -431,9 +430,10 @@ const MATCHES = [
    ["Shane Williams",2,["shane"],"2008"],["Leigh Halfpenny",4,["halfpenny"],"2013"],["Louis Bielle-Biarrey",4,["bielle-biarrey","bielle biarrey","lbb"],"2025"],
    ["Mike Brown",4,["brown"],"2014"],["Tommy Bowe",4,["bowe"],"2010"],["Jacob Stockdale",4,["stockdale"],"2018"],["Hamish Watson",4,["watson"],"2021"],
    ["Tommaso Menoncello",6,["menoncello"],"2024"],["Dan Lydiate",6,["lydiate"],"2012"],["Martyn Williams",6,["martyn"],"2005"],["Gordon D'Arcy",6,["darcy","d arcy","gordon darcy"],"2004"],["Andrea Masi",6,["masi"],"2011"]], vague:["williams"]},
-  {id:"rwc-third", q:"Name a country that has finished third at a men's Rugby World Cup", s:"Winners of the bronze final, 1987–2023", a:[
-   ["New Zealand",1,["nz","all blacks"],"1991, 2003 and 2019"],["South Africa",2,["sa","rsa","springboks"],"1999 and 2015"],["England",2,[],"2023"],
-   ["Australia",4,["aus","wallabies"],"2011"],["France",4,[],"1995"],["Wales",4,[],"1987"],["Argentina",6,["pumas"],"2007"]]},
+  {id:"nz-2015", q:"Name a player in New Zealand's starting XV for the 2015 World Cup final", s:"v Australia, Twickenham, 31 October 2015 · starters only", people:true, vague:["smith"], a:[
+   ["Dan Carter",1,["carter","daniel carter"],"Player of the Match"],["Richie McCaw",1,["mccaw"],"Captain, in his last Test"],["Ma'a Nonu",2,["nonu","maa nonu"]],["Kieran Read",2,["read"]],
+   ["Julian Savea",2,["savea"]],["Aaron Smith",2,["aaron"]],["Conrad Smith",2,["conrad"]],["Brodie Retallick",4,["retallick"]],["Sam Whitelock",4,["whitelock"]],["Ben Smith",4,["ben"]],
+   ["Jerome Kaino",4,["kaino"]],["Dane Coles",4,["coles"]],["Nehe Milner-Skudder",6,["milner-skudder","milner skudder","skudder"]],["Owen Franks",6,["franks"]],["Joe Moody",6,["moody"]]]},
   {id:"eng-coaches", q:"Name an England men's head coach", s:"Permanent appointments, 1997–2025", people:true, a:[
    ["Eddie Jones",1,["eddie"]],["Clive Woodward",1,["woodward","sir clive"]],["Steve Borthwick",2,["borthwick"]],["Martin Johnson",2,["johnno"],"Team manager, 2008–2011"],
    ["Stuart Lancaster",4,["lancaster"]],["Andy Robinson",6,["robinson"]],["Brian Ashton",6,["ashton"]]]}
@@ -454,9 +454,10 @@ const MATCHES = [
    ["David Campese",2,["campese","campo"],"1991"],["Josh Adams",4,["adams"],"2019"],["Chris Ashton",4,["ashton"],"2011"],["Doug Howlett",4,["howlett"],"2003"],
    ["John Kirwan",4,["kirwan"],"1987"],["Mils Muliaina",6,["muliaina"],"2003"],["Vincent Clerc",6,["clerc"],"2011"],["Marc Ellis",6,["ellis"],"1995"],
    ["Craig Green",6,["green"],"1987"],["Jean-Baptiste Lafond",6,["lafond","jean baptiste lafond"],"1991"]]},
-  {id:"oly-7s", q:"Name a country that has won an Olympic medal in men's rugby sevens", s:"Rio 2016, Tokyo 2020 and Paris 2024", a:[
-   ["Fiji",1,[],"Gold twice, then silver"],["France",1,[],"Gold in 2024"],["New Zealand",2,["nz"],"Silver in 2020"],["South Africa",4,["sa","rsa","blitzboks"],"Bronze twice"],
-   ["Great Britain",4,["gb","team gb","britain","uk"],"Silver in 2016"],["Argentina",6,["pumas"],"Bronze in 2020"]]},
+  {id:"eng-2007", q:"Name a player in England's starting XV for the 2007 World Cup final", s:"v South Africa, Stade de France, 20 October 2007 · starters only", people:true, a:[
+   ["Jonny Wilkinson",1,["wilko","johnny wilkinson"]],["Jason Robinson",1,["billy whizz"],"His last match"],["Phil Vickery",2,["vickery"],"Captain"],["Lewis Moody",2,["moody"]],
+   ["Mike Catt",2,["catt"]],["Mark Cueto",2,["cueto"],"The try that was ruled out"],["Andrew Sheridan",4,["sheridan"]],["Martin Corry",4,["corry"]],["Simon Shaw",4,["shaw"]],
+   ["Ben Kay",4,["kay"]],["Mathew Tait",4,["tait","matthew tait"]],["Nick Easter",4,["easter"]],["Paul Sackey",6,["sackey"]],["Andy Gomarsall",6,["gomarsall"]],["Mark Regan",6,["regan"]]], vague:["mark"]},
   {id:"6n-grounds", q:"Name the home ground of a men's Six Nations team", s:"Regular home stadiums, 2025", a:[
    ["Twickenham",1,["allianz stadium","twickers","hq"]],["Principality Stadium",1,["millennium stadium","principality","millennium","cardiff"]],["Murrayfield",2,["scottish gas murrayfield"]],
    ["Aviva Stadium",2,["aviva","lansdowne road","lansdowne"]],["Stade de France",4,["saint-denis","st denis"]],["Stadio Olimpico",6,["olimpico","rome"]]]}
@@ -474,14 +475,21 @@ const MATCHES = [
    ["Calcutta Cup",1,["calcutta"],"England v Scotland"],["Triple Crown",1,[],"The four home nations"],["Millennium Trophy",4,["millennium"],"England v Ireland"],
    ["Giuseppe Garibaldi Trophy",4,["garibaldi","garibaldi trophy"],"France v Italy"],["Doddie Weir Cup",4,["doddie weir","doddie"],"Scotland v Wales"],
    ["Centenary Quaich",6,["quaich"],"Ireland v Scotland"],["Auld Alliance Trophy",6,["auld alliance"],"France v Scotland"],["Cuttitta Cup",6,["cuttitta"],"Italy v Scotland"]]},
-  {id:"rwc19-qf", q:"Name a team that reached the quarter-finals of the 2019 World Cup", s:"Men's Rugby World Cup, Japan 2019", a:[
-   ["South Africa",1,["sa","rsa","springboks"]],["England",1,[]],["New Zealand",1,["nz","all blacks"]],["Wales",2,[]],["Ireland",2,[]],
-   ["Australia",4,["aus","wallabies"]],["Japan",4,[],"Their first quarter-final"],["France",6,[]]]},
-  {id:"grand-slam", q:"Name a country that has won a Grand Slam", s:"Men's Five and Six Nations, 1908–2025", a:[
-   ["England",1,[]],["Ireland",1,[]],["France",2,[]],["Wales",2,[]],["Scotland",6,[],"1925, 1984 and 1990"]]},
-  {id:"top-ten", q:"Name a nation in the Six Nations or the Rugby Championship", s:"The ten men's teams in the two annual championships", a:[
-   ["New Zealand",1,["nz","all blacks"]],["South Africa",1,["sa","rsa","springboks"]],["England",1,[]],["Ireland",1,[]],["France",1,[]],
-   ["Wales",2,[]],["Scotland",2,[]],["Australia",2,["aus","wallabies"]],["Italy",4,["azzurri"]],["Argentina",6,["pumas","los pumas"]]]}
+  {id:"rwc-final-10s", q:"Name a fly-half who has started a men's Rugby World Cup final", s:"Starting number 10s in every final, 1987–2023", people:true, a:[
+   ["Jonny Wilkinson",1,["wilko","johnny wilkinson"],"2003 and 2007"],["Dan Carter",1,["carter","daniel carter"],"2015"],["Handré Pollard",1,["pollard","handre pollard","handre"],"2019 and 2023"],
+   ["George Ford",2,["ford"],"2019"],["Richie Mo'unga",2,["mounga","mo unga","richie mounga"],"2023"],["Stephen Larkham",2,["larkham"],"1999 and 2003"],["Joel Stransky",2,["stransky"],"1995"],
+   ["Michael Lynagh",4,["lynagh"],"1991"],["Andrew Mehrtens",4,["mehrtens"],"1995"],["Bernard Foley",4,["foley"],"2015"],["Aaron Cruden",4,["cruden"],"2011"],["Grant Fox",4,["fox"],"1987"],
+   ["Butch James",6,["james","butch"],"2007"],["Rob Andrew",6,["andrew"],"1991"],["Morgan Parra",6,["parra"],"2011, out of position"],["Christophe Lamaison",6,["lamaison"],"1999"],["Franck Mesnel",6,["mesnel"],"1987"]]},
+  {id:"challenge-cup", q:"Name a club that has won the European Challenge Cup", s:"Europe's second-tier competition, 1997–2025", a:[
+   ["Harlequins",1,["quins"],"Three times"],["Bath",1,[],"2008 and 2025"],["Toulon",2,["rct"],"2023"],["Clermont",2,["clermont auvergne","asm","montferrand"]],["Northampton Saints",2,["northampton","saints"]],
+   ["Gloucester",2,[]],["Leinster",2,[],"2013"],["Sale",4,["sale sharks"]],["Wasps",4,["london wasps"],"2003"],["Cardiff",4,["cardiff blues","cardiff rugby"]],["Montpellier",4,[]],
+   ["Bristol Bears",4,["bristol"],"2020"],["Stade Français",4,["stade francais","paris"],"2017"],["Sharks",6,["durban sharks","the sharks"],"2024, the first South African winners"],["Lyon",6,["lou"],"2022"],
+   ["Biarritz",6,["biarritz olympique"],"2012"],["Pau",6,["section paloise"],"2000"],["Colomiers",6,[],"1998"],["Bourgoin",6,[],"The first winners, 1997"]]},
+  {id:"sa-2023", q:"Name a player in South Africa's starting XV for the 2023 World Cup final", s:"v New Zealand, Stade de France, 28 October 2023 · starters only", people:true, a:[
+   ["Siya Kolisi",1,["kolisi"],"Captain"],["Cheslin Kolbe",1,["kolbe"]],["Eben Etzebeth",1,["etzebeth"]],["Pieter-Steph du Toit",2,["du toit","pieter steph du toit","psdt"],"28 tackles and Player of the Match"],
+   ["Handré Pollard",2,["pollard","handre pollard","handre"],"Kicked all 12 points"],["Faf de Klerk",2,["de klerk","faf"]],["Damian de Allende",4,["de allende"]],["Duane Vermeulen",4,["vermeulen"]],
+   ["Bongi Mbonambi",4,["mbonambi"]],["Steven Kitshoff",4,["kitshoff"]],["Damian Willemse",4,["willemse"]],["Jesse Kriel",4,["kriel"]],["Frans Malherbe",6,["malherbe"]],
+   ["Franco Mostert",6,["mostert"]],["Kurt-Lee Arendse",6,["arendse","kurt lee arendse"]]], vague:["damian"]}
  ]
 ];
 
@@ -1096,13 +1104,14 @@ function renderFT(){
   $('ftRare').innerHTML = rare ? `Rarest try: <b>${rare.name}</b> · only ${fmtPct(rare.p)} said it` : '';
   // try map: one lane per question, from where the break started to the try line
   const num=(x,y,n,col)=>`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6.2" fill="#0e141b" stroke="${col}" stroke-width="1.6"/><text x="${x.toFixed(1)}" y="${(y+2.9).toFixed(1)}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" font-weight="600" fill="${col}">${n}</text>`;
-  const lanes=G.results.map((r,i)=>{ const g=r.tier?runGeom(r):failGeom(r), col=r.tier?HEX[r.tier]:'#ff5252'; let d='';
-    for(let k=0;k<=40;k++){ const [u,v]=g.path(k/40), q=pj(u,v); d+=(k?' L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1); }
-    const a=pj(...g.path(0)), b=pj(...g.path(1));
-    const end=r.tier ? `<circle cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" r="${r.tier>=4?4.2:3.2}" fill="${col}" filter="url(#glow)"/>`
-                     : `<path d="M${(b[0]-3.4).toFixed(1)},${(b[1]-3.4).toFixed(1)} l6.8,6.8 m0,-6.8 l-6.8,6.8" stroke="${col}" stroke-width="2.2" stroke-linecap="round"/>`;
-    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="${r.tier>=4?3:2.4}" stroke-linecap="round" stroke-dasharray="0.1 6" ${r.tier>=4?'filter="url(#glow)"':''}/>`+end+num(a[0],a[1]-7,i+1,col); }).join('');
-  let w=tvPitch().replace(/<g id="idle">.*?<\/g>/s,'').replace('<g id="marks"></g>','<g>'+lanes+'</g>').replace(/ id="(cam|actors|posts|crowd)"/g,'');
+  // one straight lane per question, so nothing crosses: question 1 on the far side, 6 nearest
+  const lanes=G.results.map((r,i)=>{ const v=61-i*10.4, col=r.tier?HEX[r.tier]:'#ff5252';
+    const u0=r.tier?100-METRES[r.tier]:failGeom(r).u0, u1=r.tier?100:failGeom(r).u1, a=pj(u0,v), b=pj(u1,v);
+    const line=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${col}" stroke-width="${r.tier?2.6:2}" stroke-linecap="round" ${r.tier?'':'stroke-dasharray="1 5" opacity=".8"'}/>`;
+    const end=r.tier ? `<circle cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" r="3.4" fill="${col}"/>`
+                     : `<path d="M${(b[0]-3).toFixed(1)},${(b[1]-3).toFixed(1)} l6,6 m0,-6 l-6,6" stroke="${col}" stroke-width="2" stroke-linecap="round"/>`;
+    return line+end+num(a[0]-(r.tier?0:0),a[1],i+1,col); }).join('');
+  let w=tvPitch().replace(/<g id="idle">.*?<\/g>/s,'').replace('<g id="crowd">','<g id="crowd" opacity=".3">').replace('<g id="marks"></g>','<g>'+lanes+'</g>').replace(/ id="(cam|actors|posts|crowd)"/g,'');
   $('trymap').innerHTML=w;
   // questions
   const qs=MATCHES[G.matchIdx]; const box=$('ftQs'); box.innerHTML='';
