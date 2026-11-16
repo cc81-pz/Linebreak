@@ -50,7 +50,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .rules li::before{content:"";position:absolute;left:4px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc)}
 .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
 .tier{border-radius:10px;padding:8px 4px;text-align:center;background:var(--night2);border:1px solid var(--line)}
-.tier b{text-shadow:0 0 14px currentColor;display:block;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:24px}
+.tier b{text-shadow:0 0 9px color-mix(in srgb,currentColor 55%,transparent);display:block;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:24px}
 .tier small{display:block;font-size:11px;line-height:1.15;color:var(--dim);margin-top:2px}
 .btn{display:block;width:100%;padding:16px;border-radius:12px;background:var(--acc);color:#1a2400;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.02em;box-shadow:0 0 0 3px rgba(198,244,50,.2),0 0 26px rgba(198,244,50,.35)}
 .btn:active{transform:translateY(1px)}
@@ -192,10 +192,10 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <li>The rarer your answer, the further back your break starts. Your score is the metres you gain.</li>
       <li>Wrong answers just draw the whistle, so go again. Run out of time and the move breaks down: tackled, held up or knocked on.</li>
       <div class="tiers">
-        <div class="tier"><b style="color:var(--t1)">5m</b><small>Pick and go</small></div>
-        <div class="tier"><b style="color:var(--t2)">22</b><small>Line break</small></div>
-        <div class="tier"><b style="color:var(--t4)">50</b><small>Breakaway</small></div>
         <div class="tier"><b style="color:var(--t6)">100</b><small>Length of the field</small></div>
+        <div class="tier"><b style="color:var(--t4)">50</b><small>Breakaway</small></div>
+        <div class="tier"><b style="color:var(--t2)">22</b><small>Line break</small></div>
+        <div class="tier"><b style="color:var(--t1)">5m</b><small>Pick and go</small></div>
       </div>
     </ul>
     <div id="dailyDone" class="done-note" style="display:none"></div>
@@ -248,7 +248,7 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="card">
       <h3><span>Try map</span><span id="ftMatchLabel"></span></h3>
       <svg id="trymap" viewBox="0 0 400 250"></svg>
-      <div class="legend"><span style="--c:var(--t1)">5m</span><span style="--c:var(--t2)">22</span><span style="--c:var(--t4)">50</span><span style="--c:var(--t6)">100</span></div>
+      <div class="legend"><span style="--c:var(--t6)">100</span><span style="--c:var(--t4)">50</span><span style="--c:var(--t2)">22</span><span style="--c:var(--t1)">5m</span></div>
     </div>
     <div class="card">
       <h3><span>Scorecard</span><span>Metres</span></h3>
@@ -546,7 +546,7 @@ function match(q,input){
 }
 
 /* ============ DAY / STORAGE ============ */
-const LAUNCH=new Date(2026,10,17); // Match #1 is 17 Nov 2026
+const LAUNCH=new Date(2026,10,10); // Match #1 is 10 Nov 2026
 function dayNum(){ const t=new Date(); t.setHours(0,0,0,0); return Math.floor((t-LAUNCH)/864e5)+1; }
 const MATCH_NO=Math.max(1,dayNum());
 function dayDate(n){ const d=new Date(LAUNCH); d.setDate(d.getDate()+n-1); return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); }
@@ -659,7 +659,7 @@ function renderHome(){
   const done=store.get('day-'+MATCH_NO,null), live=store.get('live-'+MATCH_NO,null);
   $('playDaily').textContent = done ? 'See today\'s scorecard →' : live ? `Resume Match #${MATCH_NO} →` : `Kick off: Match #${MATCH_NO} →`;
   $('liveCount').innerHTML=`<i></i><b>${Crowd.players(MATCH_NO).toLocaleString('en-GB')}</b> players so far today`;
-  const totals=[]; for(let n=1;n<=Math.max(MATCH_NO,MATCHES.length);n++){ const r=store.get('day-'+n,null); if(r) totals.push(r.total); }
+  const totals=[]; for(let n=1;n<=MATCH_NO;n++){ const r=store.get('day-'+n,null); if(r) totals.push(r.total); }
   $('statsWrap').style.display=totals.length?'block':'none';
   if(totals.length){ const stn=store.get('streak',{n:0,last:0}), cur=stn.last>=MATCH_NO-1?stn.n:0;
     const cells=[[totals.length,'Played'],[Math.round(totals.reduce((a,b)=>a+b,0)/totals.length)+'m','Average'],[Math.max(...totals)+'m','Best'],[cur,'Streak']];
@@ -669,13 +669,10 @@ function renderHome(){
   const st=store.get('streak',{n:0,last:0});
   $('hdrScore').innerHTML = st.n && st.last>=MATCH_NO-1 ? `STREAK<b>🔥 ${st.n}</b>` : '';
   const ar=$('archive'); ar.innerHTML='';
-  // Preview: every match in the bank is open to play, not only the ones whose day has come
-  const last=Math.max(MATCH_NO,MATCHES.length);
-  $('archiveSub').style.display=last>1?'block':'none';
-  $('archiveSub').textContent=MATCH_NO<MATCHES.length?'More matches: the whole first week is open during the preview':'Previous matches: catch up on the last week';
-  for(let n=Math.max(1,MATCH_NO-7);n<=last;n++){ if(n===MATCH_NO) continue; const r=store.get('day-'+n,null), lv=!r&&store.get('live-'+n,null); const b=document.createElement('button');
+  $('archiveSub').style.display=MATCH_NO>1?'block':'none';
+  for(let n=MATCH_NO-1;n>=Math.max(1,MATCH_NO-7);n--){ const r=store.get('day-'+n,null), lv=!r&&store.get('live-'+n,null); const b=document.createElement('button');
     b.className='btn ghost netbtn'+(r?' played':'');
-    b.innerHTML=`<span>#${n} · ${n<MATCH_NO?dayDate(n):'Preview'}</span><small>${r?r.total+'m ✓':lv?'Resume →':'Play →'}</small>`;
+    b.innerHTML=`<span>#${n} · ${dayDate(n)}</span><small>${r?r.total+'m ✓':lv?'Resume →':'Play →'}</small>`;
     b.onclick=()=>start(n); ar.appendChild(b); }
 }
 
