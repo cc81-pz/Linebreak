@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LINEBREAK · The daily rugby quiz</title>
+<meta name="description" content="The daily rugby quiz where the obvious answer only gets you over from 5 metres. Six questions, a fresh set every day.">
+<meta name="theme-color" content="#070b24">
+<link rel="canonical" href="https://cc81-pz.github.io/Linebreak/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LINEBREAK">
+<meta property="og:title" content="LINEBREAK · The daily rugby quiz">
+<meta property="og:description" content="Six questions. The obvious answer only gets you over from 5 metres. Can you go the length of the field?">
+<meta property="og:url" content="https://cc81-pz.github.io/Linebreak/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LINEBREAK · The daily rugby quiz">
+<meta name="twitter:description" content="Six questions. The obvious answer only gets you over from 5 metres. Can you go the length of the field?">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%89%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,800;1,900&family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#070b24; --night2:#0d1440; --panel:#111a52; --line:#27327f;
+  --chalk:#f4f6ff;
+  --ink:#f4f6ff; --dim:#98a3d9; --hot:#ff3b5c; --acc:#1df08f;
+  --t1:#2fb4ff; --t2:#1df08f; --t4:#7b6bff; --t6:#ff3b5c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--night);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;min-height:100%}
+body{background:radial-gradient(120% 60% at 50% 0%,#1a2370 0%,var(--night) 60%) fixed}
+button{font:inherit;cursor:pointer;border:0}
+.wrap{max-width:520px;margin:0 auto;padding:16px 16px 40px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.display{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:900;font-style:italic;letter-spacing:.01em;text-transform:uppercase}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.logo{display:flex;align-items:center;gap:8px;font-size:24px}
+.logo .ball{width:24px;height:14px;border-radius:50%;background:radial-gradient(ellipse at 35% 30%,#fff,#c9d4ff 60%,#7b8ad6);box-shadow:0 0 14px var(--acc);transform:rotate(-32deg)}
+.hdr-score{font-size:13px;color:var(--dim);text-align:right}
+.hdr-score b{display:block;color:var(--acc);font-size:22px;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900}
+.screen{display:none}.screen.on{display:block}
+
+/* home */
+.hero{text-align:center;padding:10px 0 4px}
+.hero h1{font-size:64px;line-height:.9}
+.hero h1 span{color:var(--acc);text-shadow:0 0 24px rgba(29,240,143,.55)}
+.hero .tag{color:var(--dim);margin-top:8px;font-size:15px}
+.rules{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:18px 0;font-size:14.5px;line-height:1.5}
+.rules li{list-style:none;padding-left:26px;position:relative;margin:6px 0}
+.rules li::before{content:"";position:absolute;left:4px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.tier{border-radius:10px;padding:8px 4px;text-align:center;background:var(--night2);border:1px solid var(--line)}
+.tier b{text-shadow:0 0 14px currentColor;display:block;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:24px}
+.tier small{display:block;font-size:11px;line-height:1.15;color:var(--dim);margin-top:2px}
+.btn{display:block;width:100%;padding:16px;border-radius:12px;background:var(--acc);color:#032a17;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.02em;box-shadow:0 0 0 3px rgba(29,240,143,.2),0 0 26px rgba(29,240,143,.35)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none;font-size:18px;padding:12px}
+.nets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.netbtn{display:flex;justify-content:space-between;align-items:center;text-align:left;margin-top:10px}
+.netbtn small{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-style:normal;font-weight:500;font-size:13px;opacity:.75;text-transform:none}
+.nets .btn{font-size:16px;padding:10px}
+.archive .btn{font-size:18px;padding:12px 14px;margin-top:8px}
+.archive .btn.played{opacity:.7}
+.sub{color:var(--dim);font-size:13px;text-align:center;margin:18px 0 6px}
+.done-note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;margin-bottom:10px;font-size:14px;color:var(--dim)}
+
+/* play */
+.tracker{display:flex;gap:6px;justify-content:center;margin-bottom:10px}
+.ob{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600;font-size:13px;color:var(--dim)}
+.ob.now{border-color:var(--ink);color:var(--ink)}
+.ob.r1{background:var(--t1);color:#04223a;border-color:var(--t1)}
+.ob.r2{background:var(--t2);color:#03281a;border-color:var(--t2)}
+.ob.r4{background:var(--t4);color:#fff;border-color:var(--t4)}
+.ob.r6{background:var(--t6);color:#fff;border-color:var(--t6);box-shadow:0 0 10px var(--t6)}
+.ob.rW{background:#3a0f1c;color:#ff8aa8;border-color:#ff3b5c}
+.timer{height:6px;background:var(--night2);border-radius:4px;overflow:hidden;margin-bottom:12px}
+.timer i{display:block;height:100%;background:var(--acc);width:100%;transition:width .2s linear}
+.timer i.low{background:var(--hot)}
+.qmeta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:6px}
+.q{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;font-size:30px;line-height:1.05;margin-bottom:6px}
+.qs{font-size:11.5px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;margin-bottom:12px}
+.groundbox{position:relative;border-radius:16px;overflow:hidden;background:#050818;border:1px solid var(--line)}
+.groundbox svg{display:block;width:100%;height:auto}
+.callout{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);opacity:0;text-align:center;pointer-events:none;transition:all .25s cubic-bezier(.2,1.6,.4,1)}
+.callout.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.callout .big{text-transform:none;font-size:76px;line-height:.9;text-shadow:0 4px 0 rgba(0,0,0,.35),0 0 30px currentColor}
+.callout .small{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;background:rgba(0,0,0,.55);padding:4px 8px;border-radius:6px;margin-top:6px;display:inline-block;color:var(--ink)}
+.miss{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:#3a0f1c;color:#ffb3c4;border:1px solid #ff3b5c;padding:6px 12px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;white-space:normal;text-align:center;width:max-content;max-width:92%}
+.miss.show{opacity:1}
+.answer-row{display:flex;gap:8px;margin:0 0 8px}
+.answer-row input{flex:1;min-width:0;background:var(--night2);border:1.5px solid var(--line);color:var(--ink);border-radius:12px;padding:14px;font:500 17px "DM Sans",system-ui,sans-serif;outline:none}
+.answer-row input:focus{border-color:var(--acc)}
+.answer-row button{background:var(--t4);color:#fff;border-radius:12px;padding:0 18px;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase}
+.feedback{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;display:none}
+.feedback.on{display:block}
+.feedback .you{font-size:16px;font-weight:700}
+.feedback .note{color:var(--dim);margin-top:2px}
+.misses{min-height:16px;margin-bottom:8px;font-size:12px;color:#ff8aa8;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+
+/* full time */
+.ft-top{text-align:center;padding:8px 0 4px}
+.ft-top .score{text-transform:none;font-size:96px;line-height:.85;color:var(--acc);text-shadow:0 0 30px rgba(29,240,143,.45)}
+.ft-top .score small{font-size:28px;color:var(--dim)}
+.ft-top .rank{font-size:30px;margin-top:6px}
+.ft-top .rankline{color:var(--dim);font-size:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+.card h3{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between}
+.legend{display:flex;gap:12px;justify-content:center;font-size:12px;color:var(--dim);margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:10px;height:3px;margin-right:5px;vertical-align:middle;background:var(--c)}
+.qrow{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.qrow:first-of-type{border-top:0}
+.qrow .n{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;color:var(--dim);font-size:13px}
+.qrow .t{font-size:12px;color:var(--dim)}
+.qrow .a{font-weight:700;font-size:15px}
+.qrow .r{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:26px;text-align:right;min-width:36px}
+.sheet-btn{background:none;color:var(--acc);font-size:12px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;padding:2px 0;text-decoration:underline;text-underline-offset:3px}
+.sheet{display:none;grid-column:1/-1;font-size:13px;line-height:1.55;background:var(--night2);border-radius:10px;padding:10px 12px}
+.sheet.on{display:block}
+.sheet .tg{margin:4px 0}
+.sheet .tg b{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;margin-right:6px}
+.sheet .hid{color:var(--dim);font-style:italic}
+.table-ranks div{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;border-top:1px dashed var(--line)}
+.table-ranks div:first-child{border-top:0}
+.table-ranks .me{color:var(--acc);font-weight:700}
+.share-pre{background:var(--night2);border-radius:10px;padding:12px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word;margin-bottom:10px}
+.share-img{width:100%;aspect-ratio:4/5;border-radius:12px;display:block;margin-bottom:10px;background:var(--night2);border:1px solid var(--line)}
+.share-hint{font-size:12px;color:var(--dim);text-align:center;margin-top:10px;min-height:16px}
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wa{background:#25d366;color:#05300f;text-decoration:none;text-align:center}
+.next{text-align:center;color:var(--dim);font-size:14px;margin-top:16px}
+.next b{color:var(--ink);font-family:"IBM Plex Mono"}
+.foot{text-align:center;color:#5d6699;font-size:11px;margin-top:26px;line-height:1.5}
+.crowd{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--dim)}
+.crowd b{color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600}
+.crowd .bar{height:5px;background:var(--night2);border-radius:3px;overflow:hidden;margin:7px 0 6px}
+.crowd .bar i{display:block;height:100%;border-radius:3px;min-width:4px}
+.pc{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;color:var(--dim);margin-left:4px;font-style:normal}
+.qrow .said{font-size:12px;color:var(--dim);margin-top:1px}
+.ft-crowd{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:999px;background:rgba(29,240,143,.1);border:1px solid rgba(29,240,143,.35);font-size:14px;color:var(--ink)}
+.ft-crowd b{color:var(--acc);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.ft-rare{color:var(--dim);font-size:13px;margin-top:10px}
+.ft-rare b{color:var(--ink)}
+.btn.wa{background:#25d366;color:#05300f;border-color:#25d366}
+.share-hint:empty{display:none}
+button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.livecount{text-align:center;font-size:13px;color:var(--dim);margin-top:12px}
+.livecount i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc);margin-right:7px;box-shadow:0 0 0 0 rgba(29,240,143,.6);animation:pulse 2s infinite}
+.livecount b{color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(29,240,143,.55)}70%,100%{box-shadow:0 0 0 8px rgba(29,240,143,0)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.stat{border-radius:10px;padding:10px 4px 8px;text-align:center;background:var(--panel);border:1px solid var(--line)}
+.stat b{display:block;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:28px;line-height:1;color:var(--acc)}
+.stat small{font-size:11px;color:var(--dim)}
+@media (prefers-reduced-motion:reduce){.livecount i,.shake{animation:none}}
+.miss.vague{background:#3a2c0a;color:#ffe08a;border-color:#ffd23f;white-space:normal;width:86%;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(5,8,22,.8);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;z-index:20}
+.modal.on{display:flex}
+.sheetbox{position:relative;width:100%;max-width:520px;max-height:88vh;overflow:auto;overscroll-behavior:contain;background:var(--night2);border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;padding:20px 18px calc(26px + env(safe-area-inset-bottom));animation:rise .22s ease-out}
+@keyframes rise{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@media (min-width:560px){.modal{align-items:center}.sheetbox{border-radius:20px;border-bottom:1px solid var(--line)}}
+.sheetbox .x{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-size:15px}
+.sh-kicker{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.sh-q{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;font-size:27px;line-height:1.05;margin:4px 50px 12px 0}
+.sh-sub{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--dim);padding-top:11px;border-top:1px dashed var(--line)}
+.tierhead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 8px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.tierhead .tag{color:var(--c);border:1px solid var(--c);border-radius:6px;padding:3px 8px;background:color-mix(in srgb,var(--c) 12%,transparent)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:baseline;gap:7px;padding:7px 10px 7px 9px;border-radius:9px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--c);font-size:14px;font-weight:500}
+.chip .pc{margin:0}
+.chip.me{background:color-mix(in srgb,var(--c) 18%,var(--panel));border-color:var(--c);color:var(--c);font-weight:700}
+.chip.me .pc{color:var(--c);opacity:.85}
+.chip.locked{color:var(--dim);font-style:italic}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .25s}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo display"><span class="ball"></span>LINEBREAK</div>
+    <div class="hdr-score" id="hdrScore"></div>
+  </header>
+
+  <!-- HOME -->
+  <section class="screen on" id="home">
+    <div class="hero">
+      <h1 class="display">Go the <span>length</span></h1>
+      <p class="tag">The daily rugby quiz. Six questions. The obvious answer only gets you over from 5 metres.</p>
+    </div>
+    <ul class="rules">
+      <li>Six questions, 20 seconds each. Any correct answer is a try.</li>
+      <li>The rarer your answer, the further back your break starts. Your score is the metres you gain.</li>
+      <li>Wrong answers just draw the whistle, so go again. Run out of time and you're held up.</li>
+      <div class="tiers">
+        <div class="tier"><b style="color:var(--t1)">5m</b><small>Pick and go</small></div>
+        <div class="tier"><b style="color:var(--t2)">22</b><small>Line break</small></div>
+        <div class="tier"><b style="color:var(--t4)">50</b><small>Breakaway</small></div>
+        <div class="tier"><b style="color:var(--t6)">100</b><small>Length of the field</small></div>
+      </div>
+    </ul>
+    <div id="dailyDone" class="done-note" style="display:none"></div>
+    <button class="btn" id="playDaily">Kick off →</button>
+    <p class="livecount" id="liveCount"></p>
+    <div id="statsWrap" style="display:none">
+      <p class="sub">Your record</p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <p class="sub" id="archiveSub">Previous matches: catch up on the last week</p>
+    <div id="archive" class="archive"></div>
+    <p class="foot">Friends &amp; family preview<br>Questions checked up to the end of 2025</p>
+  </section>
+
+  <!-- PLAY -->
+  <section class="screen" id="play">
+    <div class="tracker" id="tracker"></div>
+    <div class="timer"><i id="timerBar"></i></div>
+    <div class="qmeta"><span id="qNo">QUESTION 1/6</span><span id="clock" class="mono">0:20</span></div>
+    <div class="q" id="qText"></div>
+    <div class="qs" id="qSub"></div>
+    <form class="answer-row" id="answerForm" autocomplete="off">
+      <input id="answer" aria-label="Your answer" placeholder="Your answer…" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="go">
+      <button type="submit">Go</button>
+    </form>
+    <div class="misses" id="missList"></div>
+    <div class="groundbox" id="groundbox">
+      <svg id="ground" viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div class="callout" id="callout"><div class="big display" id="calloutBig"></div><div class="small" id="calloutSmall"></div></div>
+      <div class="miss" id="missToast"></div>
+    </div>
+    <div class="feedback" id="feedback" aria-live="polite">
+      <div class="you" id="fbYou"></div>
+      <div class="note" id="fbNote"></div>
+      <div class="crowd" id="fbCrowd"></div>
+      <button class="sheet-btn" id="fbSheet" style="margin-top:8px"></button>
+      <button class="btn" id="nextBtn" style="margin-top:12px">Next question →</button>
+    </div>
+  </section>
+
+  <!-- FULL TIME -->
+  <section class="screen" id="ft">
+    <div class="ft-top">
+      <div class="score display" id="ftScore"></div>
+      <div class="rank display" id="ftRank"></div>
+      <div class="rankline" id="ftRankLine"></div>
+      <div class="ft-crowd" id="ftCrowd"></div>
+      <div class="ft-rare" id="ftRare"></div>
+    </div>
+    <div class="card">
+      <h3><span>Try map</span><span id="ftMatchLabel"></span></h3>
+      <svg id="trymap" viewBox="0 0 400 400"></svg>
+      <div class="legend"><span style="--c:var(--t1)">5m</span><span style="--c:var(--t2)">22</span><span style="--c:var(--t4)">50</span><span style="--c:var(--t6)">100</span></div>
+    </div>
+    <div class="card">
+      <h3><span>Scorecard</span><span>Metres</span></h3>
+      <div id="ftQs"></div>
+    </div>
+    <div class="card">
+      <h3><span>Share with the group</span><span>No spoilers</span></h3>
+      <img id="shareImg" class="share-img" alt="Your LINEBREAK scorecard">
+      <button class="btn" id="shareBtn" style="margin-bottom:8px;font-size:20px;padding:13px">Share scorecard</button>
+      <div class="share-row">
+        <a class="btn ghost wa" id="waBtn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="btn ghost" id="copyBtn">Copy text</button>
+      </div>
+      <div class="share-hint" id="shareHint"></div>
+      <div class="share-pre" id="sharePre" style="margin:10px 0 0"></div>
+    </div>
+    <div class="card table-ranks" id="ranksTable"><h3><span>The table</span><span>Metres</span></h3></div>
+    <div class="next" id="nextInfo"></div>
+    <button class="btn ghost" id="homeBtn" style="margin-top:14px">Back to the clubhouse</button>
+  </section>
+</div>
+
+<div class="modal" id="sheetModal" aria-hidden="true">
+  <div class="sheetbox" role="dialog" aria-modal="true" aria-labelledby="shQ">
+    <button class="x" id="shClose" aria-label="Close">✕</button>
+    <div class="sh-kicker">Answer sheet</div>
+    <h2 class="sh-q" id="shQ"></h2>
+    <div class="sh-sub" id="shSub"></div>
+    <div id="shBody"></div>
+  </div>
+</div>
+
+
+<script>
+/* ============ QUESTION BANK ============
+   Each answer: [name, tier, aliases[], note]. Internal tier codes 1/2/4/6 are set editorially
+   and score 5m / 22m / 50m / 100m (see METRES). people:true lets a unique first name or surname
+   count on its own. vague:[...] lists words that fit more than one answer.  */
+const MATCHES = [
+ [ // ---------- MATCH A ----------
+  {id:"rwc-nations", q:"Name a country that has played at a men's Rugby World Cup", s:"Finals tournaments, 1987–2023", a:[
+   ["New Zealand",1,["nz","all blacks","kiwis"]],["South Africa",1,["sa","rsa","springboks","bokke"]],["England",1,["eng"]],["Australia",1,["aus","wallabies"]],
+   ["France",1,["les bleus"]],["Ireland",1,[]],["Wales",1,["welsh"]],["Scotland",1,["scots"]],
+   ["Argentina",2,["pumas","los pumas"]],["Italy",2,["azzurri"]],["Fiji",2,[]],["Japan",2,[]],["Samoa",2,["western samoa"]],["Tonga",2,[]],
+   ["Georgia",4,[]],["Romania",4,[]],["Canada",4,[]],["United States",4,["usa","us","america","united states of america"]],["Uruguay",4,[]],["Namibia",4,[]],
+   ["Portugal",6,[]],["Chile",6,[],"Debuted in 2023"],["Russia",6,[]],["Spain",6,[],"1999"],["Ivory Coast",6,["cote divoire","cote d ivoire","côte d'ivoire"],"1995"],["Zimbabwe",6,[],"1987 and 1991"]]},
+  {id:"eng-2003", q:"Name an England player who took the field in the 2003 World Cup final", s:"v Australia, Sydney, 22 November 2003 · starters and replacements who came on", people:true, a:[
+   ["Jonny Wilkinson",1,["wilko","johnny wilkinson"],"The drop goal with 26 seconds left"],["Martin Johnson",1,["johnno"],"Captain"],["Lawrence Dallaglio",1,["dallaglio","laurence dallaglio"]],
+   ["Jason Robinson",1,["billy whizz"]],
+   ["Will Greenwood",2,["greenwood"]],["Neil Back",2,["back"]],["Matt Dawson",2,["dawson","matthew dawson"]],["Ben Cohen",2,["cohen"]],
+   ["Phil Vickery",2,["vickery","philip vickery"]],["Mike Tindall",2,["tindall","michael tindall"]],["Josh Lewsey",2,["lewsey","joshua lewsey"]],["Richard Hill",2,["hill"]],
+   ["Steve Thompson",4,["thompson","steven thompson"]],["Ben Kay",4,["kay"]],["Mike Catt",4,["catt"],"Came on for Mike Tindall"],["Jason Leonard",4,["leonard"]],
+   ["Lewis Moody",4,["moody"],"A replacement in extra time"],
+   ["Trevor Woodman",6,["woodman"]],["Iain Balshaw",6,["balshaw","ian balshaw"],"A replacement in extra time"]]},
+  {id:"champions-cup", q:"Name a club that has won the Heineken / Champions Cup", s:"Winners, 1996 to 2025", a:[
+   ["Toulouse",1,["stade toulousain"],"Six titles"],["Leinster",1,[],"2009, 2011, 2012, 2018"],
+   ["Saracens",2,["sarries"]],["Toulon",2,["rct","rc toulon"]],["Munster",2,[],"2006, 2008"],["La Rochelle",2,["stade rochelais","rochelle"],"2022, 2023"],
+   ["Leicester Tigers",4,["leicester","tigers"],"2001, 2002"],["Wasps",4,["london wasps"],"2004, 2007"],["Exeter Chiefs",4,["exeter","chiefs"],"2020"],["Bath",4,["bath rugby"],"1998"],
+   ["Brive",6,["cab brive","cs brive"],"1997"],["Ulster",6,[],"1999"],["Northampton Saints",6,["northampton","saints"],"2000"],["Bordeaux-Bègles",6,["bordeaux","ubb","bordeaux begles","union bordeaux begles"],"2025"]]},
+  {id:"poty", q:"Name a World Rugby Player of the Year", s:"Men's winners, 2001–2024", people:true, a:[
+   ["Richie McCaw",1,["mccaw","richard mccaw"],"2006, 2009, 2010"],["Dan Carter",1,["carter","daniel carter","dc"],"2005, 2012, 2015"],["Antoine Dupont",1,["dupont"],"2021"],["Jonny Wilkinson",1,["wilkinson","wilko","johnny wilkinson"],"2003"],
+   ["Johnny Sexton",2,["sexton","jonny sexton","jonathan sexton"],"2018"],["Beauden Barrett",2,["barrett"],"2016, 2017"],["Ardie Savea",2,["savea"],"2023"],["Pieter-Steph du Toit",2,["du toit","psdt","pieter steph"],"2019, 2024"],["Bryan Habana",2,["habana","brian habana"],"2007"],
+   ["Kieran Read",4,["read"],"2013"],["Brodie Retallick",4,["retallick"],"2014"],["Josh van der Flier",4,["van der flier","vdf","flier"],"2022"],["Shane Williams",4,["williams"],"2008"],["Schalk Burger",4,["burger"],"2004"],["Thierry Dusautoir",4,["dusautoir"],"2011"],
+   ["Keith Wood",6,["wood"],"The first, in 2001"],["Fabien Galthié",6,["galthie"],"2002"]]},
+  {id:"rwc-final-venues", q:"Name a stadium that has hosted a men's Rugby World Cup final", s:"Every final, 1987–2023", a:[
+   ["Twickenham",1,["twickenham stadium","twickers","hq","allianz stadium"],"1991, 2015"],["Stade de France",1,["sdf","paris","saint denis","st denis"],"2007, 2023"],["Eden Park",1,["eden","auckland"],"1987, 2011"],
+   ["Ellis Park",2,["ellis","johannesburg","emirates airline park","coca cola park"],"1995"],["Millennium Stadium",2,["millennium","principality","principality stadium","cardiff"],"1999"],
+   ["Stadium Australia",4,["telstra","accor","homebush","telstra stadium","accor stadium","anz stadium","sydney olympic stadium"],"2003"],["International Stadium Yokohama",4,["yokohama","nissan","nissan stadium"],"2019"]]},
+  {id:"beat-all-blacks", q:"Name a nation that has beaten the All Blacks", s:"Men's Tests, up to the end of 2025", a:[
+   ["South Africa",1,["springboks","sa","rsa","bokke"]],["Australia",1,["wallabies","aus"]],
+   ["England",2,["eng"]],["France",2,["les bleus"]],["Ireland",2,[],"First win: Chicago, 2016"],
+   ["Argentina",4,["pumas","los pumas"],"First win: 2020"],
+   ["Wales",6,["welsh"],"Last did it in 1953"]]}
+ ],
+ [ // ---------- MATCH B ----------
+  {id:"rwc-semis", q:"Name a country that has reached a men's Rugby World Cup semi-final", s:"The last four, 1987–2023", a:[
+   ["New Zealand",1,["nz","all blacks"]],["South Africa",1,["sa","rsa","springboks"]],["England",1,["eng"]],["Australia",1,["aus","wallabies"]],
+   ["France",2,["les bleus"]],["Wales",2,["welsh"],"1987, 2011, 2019"],["Argentina",4,["pumas","los pumas"],"2007, 2015, 2023"],["Scotland",6,["scots"],"1991"]]},
+  {id:"rwc-captains", q:"Name a captain who has lifted the men's Rugby World Cup", s:"Winning captains, 1987–2023", people:true, a:[
+   ["Richie McCaw",1,["mccaw","richard mccaw"],"2011, 2015"],["Martin Johnson",1,["johnson","johnno"],"2003"],["Siya Kolisi",1,["kolisi"],"2019, 2023"],["Francois Pienaar",1,["pienaar","françois pienaar"],"1995"],
+   ["John Eales",2,["eales","nobody"],"1999"],["John Smit",2,["smit"],"2007"],["Nick Farr-Jones",4,["farr jones","farr-jones","nick farr jones"],"1991"],["David Kirk",6,["kirk"],"The first, in 1987"]]},
+  {id:"prem-2425", q:"Name a club in English rugby's Premiership in 2024–25", s:"The ten top-flight clubs that season", a:[
+   ["Leicester Tigers",1,["leicester","tigers"]],["Saracens",1,["sarries"]],
+   ["Bath",2,["bath rugby"]],["Harlequins",2,["quins"]],["Exeter Chiefs",2,["exeter","chiefs"]],["Northampton Saints",2,["northampton","saints"]],["Sale Sharks",2,["sale","sharks"]],
+   ["Bristol Bears",4,["bristol","bears"]],["Gloucester",4,["gloucester rugby"]],
+   ["Newcastle Falcons",6,["newcastle","falcons","newcastle red bulls","red bulls"]]]},
+  {id:"sa-2019", q:"Name a player in South Africa's starting XV for the 2019 World Cup final", s:"v England, Yokohama, 2 November 2019 · starters only", people:true, a:[
+   ["Siya Kolisi",1,["kolisi"],"Captain"],["Cheslin Kolbe",1,["kolbe"],"Scored the second try"],
+   ["Handré Pollard",2,["pollard","handre pollard","handre"]],["Faf de Klerk",2,["de klerk","klerk","faf"]],["Eben Etzebeth",2,["etzebeth"]],
+   ["Duane Vermeulen",2,["vermeulen"],"Player of the Match"],["Pieter-Steph du Toit",2,["du toit","psdt","pieter steph"]],["Makazole Mapimpi",2,["mapimpi"],"Scored the first try"],
+   ["Tendai Mtawarira",4,["mtawarira","beast","the beast","tendai"]],["Willie le Roux",4,["le roux","willie"]],["Damian de Allende",4,["de allende","allende"]],
+   ["Lukhanyo Am",4,["lukhanyo"]],["Bongi Mbonambi",4,["mbonambi","bongi"]],
+   ["Frans Malherbe",6,["malherbe"]],["Lood de Jager",6,["de jager","jager","lood"]]]},
+  {id:"super-rugby", q:"Name a team that has won Super Rugby", s:"Champions, 1996–2024", a:[
+   ["Crusaders",1,["christchurch"]],["Blues",2,["auckland blues"],"1996, 1997, 2003"],
+   ["Chiefs",2,["waikato chiefs"],"2012, 2013, 2024"],["Hurricanes",2,["canes"],"2016"],["Bulls",2,["blue bulls","pretoria"],"2007, 2009, 2010"],
+   ["Highlanders",4,[],"2015"],["Brumbies",4,["canberra"],"2001, 2004"],["Waratahs",4,["nsw waratahs"],"2014"],
+   ["Reds",6,["queensland reds","queensland"],"2011"]]},
+  {id:"rwc23-venues", q:"Name a stadium that hosted a match at the 2023 Rugby World Cup", s:"All nine venues, in France", a:[
+   ["Stade de France",1,["sdf","paris","saint denis","st denis"],"The opener and the final"],
+   ["Stade Vélodrome",2,["velodrome","marseille","stade velodrome"]],["Stadium de Toulouse",2,["toulouse","stade de toulouse"]],
+   ["Parc Olympique Lyonnais",4,["lyon","groupama stadium","olympique lyonnais"]],["Stade de Bordeaux",4,["bordeaux","matmut atlantique","matmut"]],
+   ["Stade de Nice",4,["nice","allianz riviera"]],["Stade Pierre-Mauroy",4,["pierre mauroy","lille"]],
+   ["Stade de la Beaujoire",6,["beaujoire","nantes"]],["Stade Geoffroy-Guichard",6,["geoffroy guichard","saint etienne","st etienne"]]]}
+ ],
+ [ // ---------- MATCH C ----------
+  {id:"positions", q:"Name a position in a rugby union team", s:"The 15 shirts · general or specific names both count", a:[
+   ["Fly-half",1,["fly half","flyhalf","stand off","stand-off","standoff","outside half","number 10","10"]],["Hooker",1,[]],["Prop",1,[]],["Scrum-half",1,["scrum half","scrumhalf","half back","halfback"]],
+   ["Wing",2,["winger","left wing","right wing"]],["Full-back",2,["fullback","full back"]],["Lock",2,["second row","second rower","lock forward"]],["Flanker",2,["wing forward"]],
+   ["Number Eight",2,["number 8","no 8","8","eighth man"]],["Centre",2,["center"]],
+   ["Loosehead Prop",4,["loosehead","loose head","loose-head prop"]],["Tighthead Prop",4,["tighthead","tight head","tight-head prop"]],
+   ["Openside Flanker",4,["openside","open side","fetcher"]],["Blindside Flanker",4,["blindside","blind side"]],
+   ["Inside Centre",6,["inside center","second five eighth"]],["Outside Centre",6,["outside center"]]]},
+  {id:"rwc-hosts", q:"Name a country that has hosted men's Rugby World Cup matches", s:"Hosts and co-hosts, 1987–2023", vague:["uk","united kingdom","britain","great britain"], a:[
+   ["New Zealand",1,["nz"],"1987, 2011"],["England",1,["eng"],"1991, 2015, and matches in 1999"],["France",1,[],"2007, 2023, and matches in 1991 and 1999"],
+   ["Australia",2,["aus"],"1987, 2003"],["South Africa",2,["sa","rsa"],"1995"],["Japan",2,[],"2019"],
+   ["Wales",4,["welsh"],"The main host in 1999"],["Scotland",6,["scots"],"1991, 1999, 2007"],["Ireland",6,[],"1991, 1999"]]},
+  {id:"urc", q:"Name a team in the United Rugby Championship in 2024–25", s:"All 16 teams, across Ireland, Wales, Scotland, Italy and South Africa", a:[
+   ["Leinster",1,[]],["Munster",1,[]],["Ulster",1,[]],
+   ["Connacht",2,[]],["Glasgow Warriors",2,["glasgow","warriors"]],["Cardiff",2,["cardiff rugby"]],["Ospreys",2,[]],["Scarlets",2,[]],["Bulls",2,["blue bulls"]],["Sharks",2,["natal sharks"]],["Stormers",2,[]],
+   ["Edinburgh",4,["edinburgh rugby"]],["Benetton",4,["benetton treviso","treviso"]],["Lions",4,["emirates lions","golden lions","johannesburg lions"]],
+   ["Dragons",6,["dragons rfc","newport gwent dragons"]],["Zebre Parma",6,["zebre","parma"]]]},
+  {id:"rwc-coaches", q:"Name a head coach who has won the men's Rugby World Cup", s:"Winning head coaches, 1987–2023", people:true, a:[
+   ["Clive Woodward",1,["woodward","sir clive"],"2003"],["Rassie Erasmus",1,["erasmus","rassie"],"2019"],
+   ["Steve Hansen",2,["hansen"],"2015"],["Graham Henry",2,["henry","ted henry"],"2011"],
+   ["Jacques Nienaber",4,["nienaber","jacques"],"2023"],["Jake White",4,["white"],"2007"],["Rod Macqueen",4,["macqueen","mcqueen"],"1999"],
+   ["Bob Dwyer",6,["dwyer"],"1991"],["Kitch Christie",6,["christie","kitch"],"1995"],["Brian Lochore",6,["lochore","sir brian lochore"],"1987"]]},
+  {id:"rwc-referees", q:"Name a referee who has taken charge of a men's Rugby World Cup final", s:"1987–2023", people:true, a:[
+   ["Wayne Barnes",1,["barnes"],"2023"],["Nigel Owens",1,["owens"],"2015"],["Craig Joubert",2,["joubert"],"2011"],
+   ["Jérôme Garcès",4,["garces","jerome garces","jerome"],"2019"],["Alain Rolland",4,["rolland"],"2007"],
+   ["André Watson",6,["watson","andre watson"],"Both 1999 and 2003"],["Ed Morrison",6,["morrison"],"1995"],["Derek Bevan",6,["bevan"],"1991"],["Kerry Fitzgerald",6,["fitzgerald"],"1987"]]},
+  {id:"sa-1995", q:"Name a player in South Africa's starting XV for the 1995 World Cup final", s:"v New Zealand, Ellis Park, 24 June 1995 · starters only", people:true, a:[
+   ["Francois Pienaar",1,["pienaar","françois pienaar"],"Captain"],["Joel Stransky",1,["stransky"],"The winning drop goal in extra time"],
+   ["Chester Williams",2,["williams","chester"]],["Joost van der Westhuizen",2,["van der westhuizen","westhuizen","joost"]],
+   ["James Small",4,["small"]],["Os du Randt",4,["du randt","randt","os"]],["Ruben Kruger",4,["kruger"]],["Kobus Wiese",4,["wiese"]],["Andre Joubert",4,["joubert"]],
+   ["Japie Mulder",6,["mulder"]],["Hennie le Roux",6,["le roux","hennie"]],["Mark Andrews",6,["andrews"]],["Balie Swart",6,["swart"]],["Hannes Strydom",6,["strydom"]],["Chris Rossouw",6,["rossouw"]]]}
+ ]
+];
+
+/* ============ MATCHING ============ */
+function norm(s){
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/&/g,' and ').replace(/['’]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()
+    .replace(/^the /,'').replace(/\b([a-z]) (?=[a-z]\b)/g,'$1');
+}
+function lev(a,b){
+  if(Math.abs(a.length-b.length)>2) return 9;
+  const d=Array.from({length:a.length+1},(_,i)=>[i]);
+  for(let j=1;j<=b.length;j++) d[0][j]=j;
+  for(let i=1;i<=a.length;i++) for(let j=1;j<=b.length;j++)
+  { d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+    if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1]) d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1); }
+  return d[a.length][b.length];
+}
+/* Words too common to identify an answer on their own. */
+const STOP=new Set('united states south north west east new city town stadium ground international national super'.split(' '));
+/* strong: text that names exactly one answer. vague: text that fits more than one,
+   so the player is asked to be more specific instead of being given a miss.
+   A question can add its own vague words with vague:[...] (e.g. a city with two teams). */
+function buildIndex(q){
+  const strong=new Map(), part=new Map();
+  const add=(k,i)=>{ if(!part.has(k)) part.set(k,new Set()); part.get(k).add(i); };
+  q.a.forEach((ans,i)=>[ans[0],...(ans[2]||[])].forEach(k=>strong.set(norm(k),i)));
+  q.a.forEach((ans,i)=>{
+    const t=norm(ans[0]).split(' ');
+    t.forEach((w,j)=>{ if(w.length<4) return;
+      if(STOP.has(w)){ add(w,i); add(w,-1-i); return; }            // a common word alone is never enough: ask for more
+      add(w+(q.people&&j>0&&j<t.length-1?'|mid':''),i); });        // single words
+    for(let n=2;n<t.length;n++) for(let j=0;j+n<=t.length;j++) add(t.slice(j,j+n).join(' '),i);             // runs of words
+  });
+  const vague=new Map();
+  // a middle name counts towards "more than one person has this name" but never identifies anyone
+  const owners=k=>new Set([...(part.get(k)||[]),...(part.get(k+'|mid')||[])]);
+  part.forEach((_,key)=>{ const k=key.replace('|mid',''); if(strong.has(k)) return; const o=owners(k);
+    if(o.size>1) vague.set(k,o); else if(!key.endsWith('|mid')) strong.set(k,[...o][0]); });
+  vague.forEach((o,k)=>o.forEach(i=>{ if(i<0) o.delete(i); }));
+  (q.vague||[]).forEach(k=>{ k=norm(k); strong.delete(k); vague.set(k,new Set()); });
+  return {strong,vague};
+}
+/* Returns the answer's index, -1 for a miss, -2 when the text fits more than one answer. */
+function match(q,input){
+  const k=norm(input); if(!k) return -1;
+  const {strong,vague}=q._idx||(q._idx=buildIndex(q));
+  if(strong.has(k)) return strong.get(k);
+  if(vague.has(k)) return -2;
+  if(k.length>=5){ // an unfinished name, e.g. "sydney six"
+    const hit=new Set(); let any=false;
+    strong.forEach((i,key)=>{ if(key.startsWith(k) && k.length>=key.length*.6){ hit.add(i); any=true; } });
+    if(hit.size===1) return [...hit][0]; if(any) return -2;
+  }
+  const tol = k.length>=9?2 : k.length>=5?1 : 0;
+  if(!tol) return -1;
+  let best=99, hits=new Set(), vg=false;
+  strong.forEach((i,key)=>{ const d=lev(k,key); if(d<best){best=d;hits=new Set([i]);vg=false;} else if(d===best) hits.add(i); });
+  vague.forEach((_,key)=>{ const d=lev(k,key); if(d<best){best=d;hits=new Set();vg=true;} else if(d===best) vg=true; });
+  if(best>tol) return -1;
+  return (!vg && hits.size===1) ? [...hits][0] : -2;
+}
+
+/* ============ DAY / STORAGE ============ */
+const LAUNCH=new Date(2026,10,17); // Match #1 is 17 Nov 2026
+function dayNum(){ const t=new Date(); t.setHours(0,0,0,0); return Math.floor((t-LAUNCH)/864e5)+1; }
+const MATCH_NO=Math.max(1,dayNum());
+function dayDate(n){ const d=new Date(LAUNCH); d.setDate(d.getDate()+n-1); return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); }
+function matchIdx(n){ return (n-1)%MATCHES.length; }
+const TODAY_IDX=(MATCH_NO-1)%MATCHES.length;
+const store={get(k,d){try{const v=localStorage.getItem('linebreak:'+k);return v?JSON.parse(v):d}catch(e){return d}},
+             set(k,v){try{localStorage.setItem('linebreak:'+k,JSON.stringify(v))}catch(e){}}};
+const SITE="https://cc81-pz.github.io/Linebreak/"; // the link every share points at
+const SHARE_URL = /claude/.test(location.hostname) || !/^https?:/.test(location.protocol) ? SITE : location.origin + location.pathname;
+
+/* ============ CROWD DATA ============
+   DUMMY NUMBERS until the backend exists. Everything the UI shows about other
+   players comes through this one object, shaped like the tables it will read:
+     picks(match_no, qid, answer, share_pct)   -> Crowd.q()
+     plays(match_no, players, score spread)    -> Crowd.players(), Crowd.beat()
+   To go live, replace the bodies of these functions with fetched data.
+   The numbers are seeded, so every visitor sees the same figures. */
+function rng(seed){ let h=2166136261; for(const c of seed){ h^=c.charCodeAt(0); h=Math.imul(h,16777619); }
+  return ()=>{ h=(h+0x6D2B79F5)|0; let t=Math.imul(h^(h>>>15),1|h); t^=t+Math.imul(t^(t>>>7),61|t); return ((t^(t>>>14))>>>0)/4294967296; }; }
+function Phi(z){ const t=1/(1+.2316419*Math.abs(z)), d=.3989423*Math.exp(-z*z/2);
+  const p=d*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return z>0?1-p:p; }
+function fmtPct(p){ return p>=9.95 ? Math.round(p)+'%' : p<.1 ? '<0.1%' : p.toFixed(1)+'%'; }
+const Crowd={
+  // share of players giving each answer to a question, plus the share held up
+  q(q){
+    if(q._crowd) return q._crowd;
+    const r=rng('q:'+q.id), W={1:20,2:9,4:3.5,6:1};
+    const w=q.a.map(a=>W[a[1]]*(.7+r()*.6));
+    const sum=w.reduce((t,v)=>t+v,0);
+    const held=Math.max(3,26-sum*.25)+r()*4;
+    const pct=w.map(v=>v/sum*(100-held));
+    let top=0; pct.forEach((v,i)=>{ if(v>pct[top]) top=i; });
+    return q._crowd={pct,held,top};
+  },
+  pctFor(q,name){ const i=q.a.findIndex(a=>a[0]===name); return i<0?null:this.q(q).pct[i]; },
+  // players for a match; today's count climbs through the day
+  players(n){
+    const full=Math.round(1850+rng('day:'+n)()*1500);
+    if(n<MATCH_NO) return full;
+    const d=new Date(), f=(d.getHours()*60+d.getMinutes())/1440;
+    return Math.max(41,Math.round(full*(.04+.96*Math.pow(f,1.15))));
+  },
+  // percentage of players a total beats, from the same per-answer shares
+  beat(n,total){
+    let mu=0,va=0;
+    MATCHES[matchIdx(n)].forEach(q=>{ const c=this.q(q); let e=0,e2=0;
+      q.a.forEach((a,i)=>{ const f=c.pct[i]/100; e+=f*mOf(a[1]); e2+=f*mOf(a[1])*mOf(a[1]); }); mu+=e; va+=e2-e*e; });
+    return Math.max(1,Math.min(99,Math.round(100*Phi((total-10-mu)/(Math.sqrt(va)*2.9)))));
+  }
+};
+
+/* ============ PITCH SVG ============
+   Portrait pitch, attacking up the page. 3 units = 1 metre; yAt(m) is m metres out from the try line.
+   Tier codes stay 1/2/4/6 in the data; METRES is what they are worth and where the run starts. */
+const NS='http://www.w3.org/2000/svg';
+const TRY_Y=50, PX=3, X0=95, X1=305, CX=200;
+const yAt=m=>TRY_Y+m*PX;
+const METRES={0:0,1:5,2:22,4:50,6:100};
+const mOf=t=>METRES[t]||0;
+const COL={1:'var(--t1)',2:'var(--t2)',4:'var(--t4)',6:'var(--t6)'};
+const HEX={1:'#2fb4ff',2:'#1df08f',4:'#7b6bff',6:'#ff3b5c'};
+const TIER={1:{label:'Pick and go',name:'From 5m',hint:'An obvious one'},2:{label:'Line break',name:'From the 22',hint:'Decent'},
+            4:{label:'Breakaway',name:'From halfway',hint:'Found the gap'},6:{label:'Length of the field',name:'Own line',hint:'Right from your own line'}};
+const REF_CALLS=["Knock-on!","Forward pass!","High tackle — the TMO's having a look…","Not releasing!","Crossing!","Offside!","Not straight!","Collapsed scrum!","Hands in the ruck!"];
+const laneX=i=>X0+(i+1)*30; // the six lanes on the full-time try map
+function pitchSVG(crowd=true,extra=''){
+  let s=`<defs>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14935a"/><stop offset=".5" stop-color="#0f7a45"/><stop offset="1" stop-color="#0b5f37"/></linearGradient>
+    <pattern id="mow" x="0" y="50" width="10" height="60" patternUnits="userSpaceOnUse"><rect width="10" height="30" fill="rgba(255,255,255,.045)"/></pattern>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="400" height="400" fill="#050818"/>`;
+  if(crowd){
+    let seed=11; const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+    const cols=['#2fb4ff','#1df08f','#7b6bff','#b86bff','#ff3b5c','#f4f6ff']; let dots='';
+    for(let i=0;i<190;i++){ const side=rnd(); let x,y;
+      if(side<.4){x=4+rnd()*82;y=6+rnd()*388;} else if(side<.8){x=314+rnd()*82;y=6+rnd()*388;} else if(side<.9){x=90+rnd()*220;y=3+rnd()*13;} else {x=90+rnd()*220;y=384+rnd()*13;}
+      dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.3" fill="${cols[Math.floor(rnd()*cols.length)]}" opacity="${(.3+rnd()*.5).toFixed(2)}"/>`; }
+    s+=dots;
+    [[30,26],[370,26],[30,374],[370,374]].forEach(([x,y])=>{s+=`<g filter="url(#glow)"><rect x="${x-10}" y="${y-4}" width="20" height="8" rx="2" fill="#e8eeff"/></g>`});
+  }
+  const W=X1-X0, ln=(y,w,o,d)=>`<line x1="${X0}" y1="${y}" x2="${X1}" y2="${y}" stroke="var(--chalk)" stroke-width="${w}" opacity="${o}"${d?` stroke-dasharray="${d}"`:''}/>`;
+  s+=`<g id="cam">
+  <rect x="${X0}" y="20" width="${W}" height="360" fill="url(#grass)"/>
+  <rect x="${X0}" y="20" width="${W}" height="360" fill="url(#mow)"/>
+  <rect x="${X0}" y="20" width="${W}" height="30" fill="rgba(0,0,0,.22)"/><rect x="${X0}" y="350" width="${W}" height="30" fill="rgba(0,0,0,.22)"/>
+  <rect x="${X0}" y="20" width="${W}" height="360" fill="none" stroke="var(--chalk)" stroke-width="1.8" opacity=".9"/>
+  ${ln(yAt(0),2,.95)}${ln(yAt(100),2,.95)}${ln(yAt(50),2,.95)}${ln(yAt(22),1.6,.9)}${ln(yAt(78),1.6,.9)}
+  ${ln(yAt(40),1.3,.75,'5 5')}${ln(yAt(60),1.3,.75,'5 5')}${ln(yAt(5),1.3,.7,'5 5')}${ln(yAt(95),1.3,.7,'5 5')}
+  <line x1="${X0+15}" y1="${yAt(5)}" x2="${X0+15}" y2="${yAt(95)}" stroke="var(--chalk)" stroke-width="1.2" opacity=".6" stroke-dasharray="5 5"/>
+  <line x1="${X1-15}" y1="${yAt(5)}" x2="${X1-15}" y2="${yAt(95)}" stroke="var(--chalk)" stroke-width="1.2" opacity=".6" stroke-dasharray="5 5"/>
+  <g font-family="IBM Plex Mono,monospace" font-size="8" fill="#f4f6ff" opacity=".55"><text x="${X0+6}" y="${yAt(22)-3}">22</text><text x="${X0+6}" y="${yAt(50)-3}">50</text><text x="${X0+6}" y="${yAt(78)-3}">22</text></g>
+  <g id="posts" stroke="var(--chalk)" stroke-width="1.5"><line x1="188" y1="${TRY_Y}" x2="212" y2="${TRY_Y}"/><circle cx="188" cy="${TRY_Y}" r="2.8" fill="#fff" filter="url(#glow)"/><circle cx="212" cy="${TRY_Y}" r="2.8" fill="#fff" filter="url(#glow)"/></g>
+  <g stroke="var(--chalk)" stroke-width="1.5" opacity=".7"><line x1="188" y1="${yAt(100)}" x2="212" y2="${yAt(100)}"/><circle cx="188" cy="${yAt(100)}" r="2.8" fill="#fff"/><circle cx="212" cy="${yAt(100)}" r="2.8" fill="#fff"/></g>
+  <g id="idle"><ellipse cx="${CX}" cy="${yAt(50)}" rx="6" ry="3.6" transform="rotate(-30 ${CX} ${yAt(50)})" fill="#f4f6ff" opacity=".85" filter="url(#glow)"/></g>
+  <g id="actors">${extra}</g></g>`;
+  return s;
+}
+function angleFor(str){ let h=0; for(const c of str) h=(h*31+c.charCodeAt(0))>>>0; return (h%360)*Math.PI/180; }
+
+/* ============ GAME ============ */
+const $=id=>document.getElementById(id);
+let G=null, tick=null;
+const Q_SECS=20;
+
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id)); window.scrollTo(0,0); }
+
+function renderHome(){
+  const done=store.get('day-'+MATCH_NO,null), live=store.get('live-'+MATCH_NO,null);
+  $('playDaily').textContent = done ? 'See today\'s scorecard →' : live ? `Resume Match #${MATCH_NO} →` : `Kick off: Match #${MATCH_NO} →`;
+  $('liveCount').innerHTML=`<i></i><b>${Crowd.players(MATCH_NO).toLocaleString('en-GB')}</b> players so far today`;
+  const totals=[]; for(let n=1;n<=MATCH_NO;n++){ const r=store.get('day-'+n,null); if(r) totals.push(r.total); }
+  $('statsWrap').style.display=totals.length?'block':'none';
+  if(totals.length){ const stn=store.get('streak',{n:0,last:0}), cur=stn.last>=MATCH_NO-1?stn.n:0;
+    const cells=[[totals.length,'Played'],[Math.round(totals.reduce((a,b)=>a+b,0)/totals.length)+'m','Average'],[Math.max(...totals)+'m','Best'],[cur,'Streak']];
+    $('stats').innerHTML=cells.map(c=>`<div class="stat"><b>${c[0]}</b><small>${c[1]}</small></div>`).join(''); }
+  const dn=$('dailyDone'); dn.style.display=done?'block':'none';
+  if(done) dn.innerHTML=`Today's match is done: <b style="color:var(--acc)">${done.total}m</b>. The next one is out at midnight.`;
+  const st=store.get('streak',{n:0,last:0});
+  $('hdrScore').innerHTML = st.n && st.last>=MATCH_NO-1 ? `STREAK<b>🔥 ${st.n}</b>` : '';
+  const ar=$('archive'); ar.innerHTML='';
+  $('archiveSub').style.display=MATCH_NO>1?'block':'none';
+  for(let n=MATCH_NO-1;n>=Math.max(1,MATCH_NO-7);n--){ const r=store.get('day-'+n,null), lv=!r&&store.get('live-'+n,null); const b=document.createElement('button');
+    b.className='btn ghost netbtn'+(r?' played':'');
+    b.innerHTML=`<span>#${n} · ${dayDate(n)}</span><small>${r?r.total+'m ✓':lv?'Resume →':'Play →'}</small>`;
+    b.onclick=()=>start(n); ar.appendChild(b); }
+}
+
+function start(n){
+  const done=store.get('day-'+n,null); if(done){ G=done; renderFT(); return; }
+  // A match in progress is resumed, never restarted: the clock keeps running while you are away.
+  const live=store.get('live-'+n,null);
+  if(live && live.matchIdx===matchIdx(n) && Array.isArray(live.results)){
+    G=live;
+    if(G.results[G.qi]){ if(G.qi>=5){ finishMatch(); return; } G.qi++; show('play'); startQ(); }
+    else { show('play'); startQ(true); }
+    return;
+  }
+  G={mode:'daily',matchNo:n,matchIdx:matchIdx(n),qi:0,results:[],total:0};
+  show('play'); startQ();
+}
+
+function renderTracker(){
+  const t=$('tracker'); t.innerHTML='';
+  for(let i=0;i<6;i++){ const r=G.results[i]; const d=document.createElement('div');
+    d.className='ob'+(r?(r.tier?' r'+r.tier:' rW'):'')+(i===G.qi&&!r?' now':'');
+    d.textContent=r?(r.tier?mOf(r.tier):'✕'):(i+1); if(d.textContent.length>2) d.style.fontSize='11px'; t.appendChild(d); }
+  $('hdrScore').innerHTML=`METRES<b>${G.total}m</b>`;
+}
+
+function saveLive(){ store.set('live-'+G.matchNo,G); }
+function startQ(resume){
+  const q=MATCHES[G.matchIdx][G.qi];
+  if(!resume || !G.deadline){ G.misses=[]; G.deadline=Date.now()+Q_SECS*1000; }
+  G.locked=false; saveLive();
+  $('qNo').textContent=`QUESTION ${G.qi+1}/6 · MATCH #${G.matchNo}${G.matchNo===MATCH_NO?' · TODAY':''}`;
+  $('qText').textContent=q.q; $('qSub').textContent=q.s;
+  $('ground').innerHTML=pitchSVG();
+  $('callout').classList.remove('show'); $('feedback').classList.remove('on'); $('missList').textContent=G.misses.length?'Whistled: '+G.misses.join(' · '):'';
+  $('answerForm').style.display='flex';
+  const inp=$('answer'); inp.value=''; inp.disabled=false; inp.focus();
+  renderTracker();
+  clearInterval(tick); tick=setInterval(updTimer,100); updTimer();
+}
+
+function updTimer(){
+  const left=Math.max(0,G.deadline-Date.now()), f=left/(Q_SECS*1000);
+  const bar=$('timerBar'); bar.style.width=(f*100)+'%'; bar.classList.toggle('low',f<.3);
+  const s=Math.ceil(left/1000); $('clock').textContent='0:'+String(s).padStart(2,'0');
+  if(left<=0 && !G.locked) finishQ(null);
+}
+
+$('answerForm').addEventListener('submit',e=>{
+  e.preventDefault(); if(G.locked) return;
+  const inp=$('answer'), v=inp.value.trim(); if(!v) return;
+  const q=MATCHES[G.matchIdx][G.qi]; const i=match(q,v);
+  if(i===-2){
+    const t=$('missToast'); t.textContent=`“${v}” isn't enough on its own. Be more specific.`; t.className='miss vague show';
+    clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2600);
+    inp.focus(); return;
+  }
+  if(i<0){
+    G.misses.push(v); inp.value='';
+    const t=$('missToast'); t.textContent=REF_CALLS[Math.floor(Math.random()*REF_CALLS.length)]+'  ✗ '+v; t.className='miss show';
+    clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),1800);
+    $('groundbox').classList.remove('shake'); void $('groundbox').offsetWidth; $('groundbox').classList.add('shake');
+    $('missList').textContent='Whistled: '+G.misses.join(' · '); saveLive();
+    return;
+  }
+  finishQ(i);
+});
+
+function finishQ(i){
+  G.locked=true; clearInterval(tick);
+  const q=MATCHES[G.matchIdx][G.qi];
+  const inp=$('answer'); inp.blur(); inp.disabled=true; $('answerForm').style.display='none';
+  setTimeout(()=>$('groundbox').scrollIntoView({behavior:'smooth',block:'start'}),60);
+  let r;
+  if(i===null){ r={qid:q.id,answer:null,tier:0,ang:0}; }
+  else { const a=q.a[i]; r={qid:q.id,answer:a[0],tier:a[1],note:a[3]||'',ang:angleFor(a[0]+q.id)}; }
+  const m=mOf(r.tier);
+  G.results[G.qi]=r; G.total+=m; saveLive();
+  animateRun(r);
+  const big=$('calloutBig'), small=$('calloutSmall');
+  if(!r.tier){ big.textContent='Held up!'; big.style.color='#ff6b8b'; small.textContent='Out of time · 0m'; }
+  else { big.textContent=m+'m'; big.style.color=COL[r.tier]; small.textContent=`${TIER[r.tier].label} · +${m}m`; }
+  const dur=RUN_MS[r.tier];
+  setTimeout(()=>$('callout').classList.add('show'), Math.round(dur*.85));
+  $('fbYou').innerHTML = r.answer ? `You said <span style="color:${COL[r.tier]}">${r.answer}</span>` : 'No answer in time.';
+  const topCount=q.a.filter(a=>a[1]===6).length;
+  $('fbNote').textContent = (r.note? r.note+' · ' : '') + `${q.a.length} correct answers, ${topCount} of them worth 100m.`;
+  const cr=Crowd.q(q), topA=q.a[cr.top];
+  const popular = (!r.answer || r.answer!==topA[0]) ? `Most popular: <b>${topA[0]}</b> · ${fmtPct(cr.pct[cr.top])}` : 'That was the most popular answer.';
+  if(r.answer){ const p=Crowd.pctFor(q,r.answer);
+    $('fbCrowd').innerHTML=`<b>${fmtPct(p)}</b> of players said this<div class="bar"><i style="width:${(p/cr.pct[cr.top]*100).toFixed(1)}%;background:${COL[r.tier]}"></i></div>${popular}`;
+  } else {
+    $('fbCrowd').innerHTML=`<b>${fmtPct(cr.held)}</b> of players were held up by this one too<div class="bar"><i style="width:${(cr.held/cr.pct[cr.top]*100).toFixed(1)}%;max-width:100%;background:#ff6b8b"></i></div>${popular}`;
+  }
+  $('fbSheet').textContent=`See all ${q.a.length} answers →`; $('fbSheet').onclick=()=>openSheet(q,r,G.matchNo);
+  $('nextBtn').textContent = G.qi===5 ? 'Full time →' : 'Next question →';
+  setTimeout(()=>{ $('feedback').classList.add('on'); renderTracker(); $('nextBtn').focus(); }, Math.min(1300,Math.round(dur*.7)));
+}
+
+/* How the run looks, per tier. dur is the whole run in ms; amp/wob are the sidesteps; def are where the
+   beaten defenders sit along the run; zoom is how far the camera pushes in. Tier 0 is a held-up. */
+const RUN_MS={0:900,1:520,2:900,4:1300,6:1800};
+const RUN={
+  1:{amp:0,wob:0,def:[],chase:[[1,12,10],[-1,12,10]],lag:0,zoom:0,ease:t=>1-Math.pow(1-t,3)},
+  2:{amp:9,wob:1,def:[.55],chase:[[1,9,12]],lag:.12,zoom:.04,ease:t=>1-Math.pow(1-t,2.4)},
+  4:{amp:15,wob:2,def:[.33,.68],chase:[[-1,9,12]],lag:.2,zoom:.09,ease:t=>1-Math.pow(1-t,1.8)},
+  6:{amp:22,wob:3,def:[.2,.45,.7],chase:[[1,9,12],[-1,12,18]],lag:.28,zoom:.15,ease:t=>t<.5?2*t*t:1-2*(1-t)*(1-t)}
+};
+function animateRun(r){
+  const act=document.getElementById('actors'), cam=document.getElementById('cam'); if(!act||!cam) return;
+  const idle=document.getElementById('idle'); if(idle) idle.remove();
+  const mk=(tag,at)=>{ const e=document.createElementNS(NS,tag); for(const k in at) e.setAttribute(k,at[k]); act.appendChild(e); return e; };
+  const held=!r.tier, T=r.tier, col=held?HEX[6]:HEX[T], dur=RUN_MS[T], a=r.ang||0;
+  const clampX=x=>Math.max(X0+20,Math.min(X1-20,x));
+  const P=held?{amp:0,wob:0,def:[],chase:[],lag:0,zoom:0,ease:t=>1-Math.pow(1-t,2)}:RUN[T];
+  const sy=yAt(held?16:METRES[T]), ey=held?TRY_Y+3:TRY_Y;
+  const sx=clampX(CX+Math.cos(a)*(T===1?30:60)), ex=held?sx:clampX(T===1?sx+Math.sin(a)*8:CX+Math.sin(a*1.7)*(T===2?40:55));
+  const path=e=>{ const f=(1-e*.4); return [sx+(ex-sx)*e+Math.sin(e*Math.PI*P.wob)*P.amp*f, sy+(ey-sy)*e]; };
+  const startLine= held?null:mk('line',{x1:X0,x2:X1,y1:sy,y2:sy,stroke:col,'stroke-width':2.6,opacity:.9,filter:'url(#glow)'});
+  const trail=mk('path',{fill:'none',stroke:col,'stroke-width':T===6?3.2:2.4,'stroke-linecap':'round','stroke-linejoin':'round',opacity:.85,filter:T>=4?'url(#glow)':'none'});
+  const dEls=P.def.map(()=>mk('circle',{r:4.4,fill:'#f4f6ff',stroke:'#8b95d9','stroke-width':1}));
+  const cEls=P.chase.map(()=>mk('circle',{r:4.2,fill:'#f4f6ff',stroke:'#8b95d9','stroke-width':1,opacity:.9}));
+  const hEls=held?[0,1,2].map(()=>mk('circle',{r:4.4,fill:'#f4f6ff',stroke:'#8b95d9','stroke-width':1})):[];
+  const body=mk('ellipse',{rx:5.2,ry:5.2,fill:col,stroke:'#fff','stroke-width':1.6,filter:T===6?'url(#glow2)':'url(#glow)'});
+  const t0=performance.now(); let d='';
+  (function step(now){
+    const t=Math.min(1,(now-t0)/dur), e=Math.min(1,P.ease(t));
+    const [x,y]=path(e);
+    d+=(d?' L':'M')+x.toFixed(1)+','+y.toFixed(1); trail.setAttribute('d',d);
+    const dive=T===1&&e>.6?(e-.6)/.4:0;
+    body.setAttribute('cx',x); body.setAttribute('cy',y); body.setAttribute('rx',5.2+3.2*dive+(T===6?1:0)); body.setAttribute('ry',5.2-1.8*dive+(T===6?1:0));
+    if(startLine) startLine.setAttribute('opacity',(.9*(1-e)).toFixed(2));
+    P.def.forEach((pd,k)=>{ const [bx,by]=path(pd), s=k%2?-1:1; let lat,dy=0,op=1,rr=4.4;
+      if(e<pd){ const c=e/pd; lat=5+30*(1-c)*(1-c); dy=-10*(1-c); }
+      else { const f=Math.min(1,(e-pd)/(1-pd)*1.6); lat=5+f*28; dy=f*14; op=1-.7*f; rr=4.4*(1-.3*f); }
+      const el=dEls[k]; el.setAttribute('cx',bx+s*lat); el.setAttribute('cy',by+dy); el.setAttribute('opacity',op.toFixed(2)); el.setAttribute('r',rr.toFixed(1)); });
+    P.chase.forEach(([s,dx,dy],k)=>{ const [bx,by]=path(Math.max(0,e-P.lag*(1+k*.5)));
+      const el=cEls[k]; el.setAttribute('cx',bx+s*(dx+(P.lag?0:-6*e))); el.setAttribute('cy',by+dy+(P.lag?0:-4*e)+ (P.lag?e*8*k:0)); });
+    if(held){ const u=Math.max(0,(t-.35)/.65), R=38-30*u;
+      hEls.forEach((el,k)=>{ const th=-.9+k*Math.PI*.9; el.setAttribute('cx',x+Math.cos(th+Math.PI/2)*R); el.setAttribute('cy',y+Math.sin(th+Math.PI/2)*R*.8-4*(1-u)); }); }
+    if(P.zoom){ const z=1+P.zoom*Math.sin(Math.PI*t); cam.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${z.toFixed(3)}) translate(${(-x).toFixed(1)} ${(-y).toFixed(1)})`); }
+    if(t<1) requestAnimationFrame(step);
+    else { cam.removeAttribute('transform'); if(startLine) startLine.remove(); if(held) heldBurst(x,y); else celebrate(T,x,y); }
+  })(t0);
+}
+
+function ringPulse(x,y,col,n,delay){
+  const act=document.getElementById('actors'); if(!act) return;
+  for(let k=0;k<n;k++){ const c=document.createElementNS(NS,'circle'); c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('fill','none'); c.setAttribute('stroke',col); c.setAttribute('stroke-width','2.5'); c.setAttribute('opacity','0'); act.appendChild(c);
+    const t0=performance.now()+k*(delay||180);
+    (function f(now){ const t=(now-t0)/700; if(t<0){ requestAnimationFrame(f); return; } c.setAttribute('r',(6+t*34).toFixed(1)); c.setAttribute('opacity',Math.max(0,.9*(1-t)).toFixed(2)); c.setAttribute('stroke-width',(2.5*(1-t)+.5).toFixed(1));
+      if(t<1) requestAnimationFrame(f); else c.remove(); })(performance.now()); }
+}
+function heldBurst(x,y){ ringPulse(x,y,HEX[6],2,220); }
+
+function celebrate(T,x,y){
+  const svg=$('ground'); const col=HEX[T];
+  const N={1:12,2:22,4:38,6:66}[T], life={1:.8,2:1.1,4:1.3,6:1.6}[T];
+  const nat=['#2fb4ff','#1df08f','#7b6bff','#b86bff','#ff3b5c','#f4f6ff'];
+  const posts=document.getElementById('posts');
+  if(posts && T>=2){ const cs=posts.querySelectorAll('circle'); cs.forEach(c=>c.setAttribute('fill',col)); setTimeout(()=>cs.forEach(c=>c.setAttribute('fill','#fff')),900); }
+  ringPulse(x,y,col,{1:1,2:1,4:2,6:3}[T],150);
+  const parts=[]; for(let i=0;i<N;i++){ const c=document.createElementNS(NS,'rect'); const ang=Math.random()*Math.PI*2, v=(T===1?1:1.5)+Math.random()*(T===6?5:3.2);
+    c.setAttribute('width',(T===1?2:3)+Math.random()*3); c.setAttribute('height',2+Math.random()*3);
+    c.setAttribute('fill',T===6?nat[i%nat.length]:(i%3===0?'#f4f6ff':col));
+    svg.appendChild(c); parts.push({c,x,y,vx:Math.cos(ang)*v,vy:Math.sin(ang)*v-(T===1?1:2.2),r:Math.random()*360}); }
+  let flash=null; const fa={4:.16,6:.34}[T];
+  if(fa){ flash=document.createElementNS(NS,'rect'); flash.setAttribute('width',400); flash.setAttribute('height',400); flash.setAttribute('fill','#fff'); flash.setAttribute('opacity',fa); svg.appendChild(flash); }
+  const t0=performance.now();
+  (function f(now){ const t=(now-t0)/1000; if(flash) flash.setAttribute('opacity',Math.max(0,fa-t*fa*3.2));
+    parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=.12; p.r+=8; p.c.setAttribute('x',p.x); p.c.setAttribute('y',p.y);
+      p.c.setAttribute('transform',`rotate(${p.r} ${p.x} ${p.y})`); p.c.setAttribute('opacity',Math.max(0,1-t/life)); });
+    if(t<life) requestAnimationFrame(f); else { parts.forEach(p=>p.c.remove()); if(flash) flash.remove(); } })(t0);
+}
+
+async function fontsReady(){
+  if(!document.fonts||!document.fonts.load) return;
+  const need=['italic 900 64px "Barlow Condensed"','600 30px "IBM Plex Mono"'];
+  try{ await Promise.race([Promise.all(need.map(f=>document.fonts.load(f))), new Promise(r=>setTimeout(r,1800))]); }catch(e){}
+}
+function shareImage(g,rk){
+  const W=1080,H=1350,c=document.createElement('canvas'); c.width=W; c.height=H; const x=c.getContext('2d');
+  const bg=x.createRadialGradient(W/2,0,50,W/2,0,H); bg.addColorStop(0,'#1a2370'); bg.addColorStop(.6,'#070b24'); x.fillStyle=bg; x.fillRect(0,0,W,H);
+  const D='italic 900 ', F=' "Barlow Condensed","Arial Narrow",Arial,sans-serif', M=' "IBM Plex Mono",ui-monospace,monospace';
+  const ACC='#1df08f';
+  // header: rugby ball and wordmark
+  x.textBaseline='alphabetic';
+  x.save(); x.translate(100,104); x.rotate(-.55); x.shadowColor=ACC; x.shadowBlur=28; x.fillStyle='#f4f6ff'; x.beginPath(); x.ellipse(0,0,34,20,0,0,7); x.fill(); x.shadowBlur=0;
+  x.strokeStyle='#7b8ad6'; x.lineWidth=3; x.beginPath(); x.moveTo(-10,0); x.lineTo(10,0); for(let k=-6;k<=6;k+=6){ x.moveTo(k,-5); x.lineTo(k,5); } x.stroke(); x.restore();
+  x.textAlign='left'; x.fillStyle='#f4f6ff'; x.font=D+'64px'+F; x.fillText('LINEBREAK',152,127);
+  x.textAlign='right'; x.fillStyle='#98a3d9'; x.font='600 30px'+M; x.fillText(('MATCH #'+g.matchNo+' · '+dayDate(g.matchNo)).toUpperCase(), W-70,118);
+  // score in metres
+  x.textAlign='left'; x.font=D+'230px'+F; const tw=x.measureText(String(g.total)).width;
+  x.font=D+'90px'+F; const sw=x.measureText('m').width, gap=14, left=(W-(tw+gap+sw))/2;
+  x.shadowColor=ACC; x.shadowBlur=34; x.fillStyle=ACC; x.font=D+'230px'+F; x.fillText(g.total,left,360); x.shadowBlur=0;
+  x.fillStyle='#98a3d9'; x.font=D+'90px'+F; x.fillText('m',left+tw+gap,360);
+  x.textAlign='center'; x.fillStyle='#f4f6ff'; x.font=D+'80px'+F; x.fillText(rk[1].toUpperCase(),W/2,452);
+  if(g.beat){ const label='BETTER THAN '+g.beat+'% OF PLAYERS'; x.font='600 30px'+M; const pw=x.measureText(label).width+64, px=(W-pw)/2, py=486, ph=60;
+    x.beginPath(); if(x.roundRect) x.roundRect(px,py,pw,ph,30); else x.rect(px,py,pw,ph);
+    x.fillStyle='rgba(29,240,143,.12)'; x.fill(); x.strokeStyle='rgba(29,240,143,.55)'; x.lineWidth=2; x.stroke();
+    x.fillStyle=ACC; x.fillText(label,W/2,py+41); }
+  // the six answers
+  g.results.forEach((r,i)=>{ const bx=W/2+(i-2.5)*118, by=g.beat?628:590, m=mOf(r.tier); x.beginPath(); x.arc(bx,by,43,0,7);
+    if(r.tier){ x.shadowColor=HEX[r.tier]; x.shadowBlur=r.tier===6?26:12; }
+    x.fillStyle=r.tier?HEX[r.tier]:'#3a0f1c'; x.fill(); x.shadowBlur=0; if(!r.tier){x.strokeStyle='#ff3b5c';x.lineWidth=4;x.stroke();}
+    x.fillStyle=r.tier>=4?'#fff':r.tier?'#04223a':'#ff8aa8'; x.font=(String(m).length>2?'600 34px':'600 40px')+M; x.fillText(r.tier?m:'0',bx,by+13); });
+  // try map
+  const k=1.25, ox=(W-400*k)/2, oy=g.beat?702:672, X=v=>ox+v*k, Y=v=>oy+v*k;
+  x.fillStyle='#050818'; x.beginPath(); if(x.roundRect) x.roundRect(ox,oy,400*k,400*k,26); else x.rect(ox,oy,400*k,400*k); x.fill();
+  const gg=x.createLinearGradient(0,Y(20),0,Y(380)); gg.addColorStop(0,'#14935a'); gg.addColorStop(.5,'#0f7a45'); gg.addColorStop(1,'#0b5f37');
+  x.fillStyle=gg; x.fillRect(X(X0),Y(20),(X1-X0)*k,360*k);
+  x.fillStyle='rgba(255,255,255,.045)'; for(let yy=50;yy<380;yy+=60) x.fillRect(X(X0),Y(yy),(X1-X0)*k,Math.min(30,380-yy)*k);
+  x.fillStyle='rgba(0,0,0,.22)'; x.fillRect(X(X0),Y(20),(X1-X0)*k,30*k); x.fillRect(X(X0),Y(350),(X1-X0)*k,30*k);
+  const L=(y,w,o,dash)=>{ x.strokeStyle='rgba(244,246,255,'+o+')'; x.lineWidth=w; x.setLineDash(dash||[]); x.beginPath(); x.moveTo(X(X0),Y(y)); x.lineTo(X(X1),Y(y)); x.stroke(); x.setLineDash([]); };
+  x.strokeStyle='rgba(244,246,255,.9)'; x.lineWidth=3; x.strokeRect(X(X0),Y(20),(X1-X0)*k,360*k);
+  L(yAt(0),3.5,.95); L(yAt(100),3.5,.95); L(yAt(50),3.5,.95); L(yAt(22),3,.9); L(yAt(78),3,.9);
+  [40,60,5,95].forEach(m=>L(yAt(m),2.4,.7,[8,8]));
+  [X0+15,X1-15].forEach(v=>{ x.strokeStyle='rgba(244,246,255,.55)'; x.lineWidth=2; x.setLineDash([8,8]); x.beginPath(); x.moveTo(X(v),Y(yAt(5))); x.lineTo(X(v),Y(yAt(95))); x.stroke(); x.setLineDash([]); });
+  x.fillStyle='#fff'; [188,212].forEach(v=>{ x.beginPath(); x.arc(X(v),Y(TRY_Y),4.5,0,7); x.fill(); });
+  g.results.forEach((r,i)=>{ const lx=X(laneX(i)), ty=Y(TRY_Y); x.fillStyle='rgba(244,246,255,.5)'; x.font='600 18px'+M; x.textAlign='center'; x.fillText(i+1,lx,Y(38));
+    if(!r.tier){ x.strokeStyle='#ff3b5c'; x.lineWidth=5; x.shadowColor='#ff3b5c'; x.shadowBlur=14; x.beginPath(); x.arc(lx,ty+8,11,0,7); x.stroke(); x.shadowBlur=0; return; }
+    const sy=Y(yAt(mOf(r.tier)));
+    x.strokeStyle=HEX[r.tier]; x.lineWidth=r.tier>=4?9:6; x.lineCap='round'; x.shadowColor=HEX[r.tier]; x.shadowBlur=r.tier===6?26:14;
+    x.beginPath(); x.moveTo(lx,sy); x.lineTo(lx,ty); x.stroke();
+    x.fillStyle='#fff'; x.beginPath(); x.arc(lx,sy,7,0,7); x.fill();
+    x.fillStyle=HEX[r.tier]; x.beginPath(); x.arc(lx,ty,r.tier>=4?14:11,0,7); x.fill(); x.shadowBlur=0; });
+  // call to action
+  x.textAlign='center'; x.fillStyle='#f4f6ff'; x.font=D+'54px'+F; x.fillText('CAN YOU BEAT IT?',W/2,1258);
+  x.fillStyle=ACC; x.font='600 32px'+M; x.fillText(SHARE_URL.replace(/^https?:\/\//,'').replace(/\/$/,''),W/2,1308);
+  return c;
+}
+
+$('nextBtn').onclick=()=>{
+  if(G.qi<5){ G.qi++; startQ(); return; }
+  finishMatch();
+};
+function finishMatch(){
+  G.finished=true;
+  store.set('day-'+G.matchNo,G); store.set('live-'+G.matchNo,null);
+  if(G.matchNo===MATCH_NO){
+    const st=store.get('streak',{n:0,last:0});
+    store.set('streak',{n: st.last===MATCH_NO-1 ? st.n+1 : (st.last===MATCH_NO? st.n : 1), last:MATCH_NO});
+  }
+  renderFT();
+}
+
+const TIER_NAME={1:TIER[1].name,2:TIER[2].name,4:TIER[4].name,6:TIER[6].name};
+function openSheet(q,r,matchNo){
+  const cq=Crowd.q(q), today=matchNo===MATCH_NO, mine=r&&r.answer;
+  $('shQ').textContent=q.q;
+  $('shSub').textContent=`% = share of ${today?"today's ":''}${Crowd.players(matchNo).toLocaleString('en-GB')} players who said it`;
+  const chip=([a,p])=>`<span class="chip${a[0]===mine?' me':''}">${a[0]}<span class="pc">${fmtPct(p)}</span></span>`;
+  let h='';
+  [6,4,2,1].forEach(t=>{
+    const list=q.a.map((a,j)=>[a,cq.pct[j]]).filter(e=>e[0][1]===t).sort((x,y)=>y[1]-x[1]); if(!list.length) return;
+    h+=`<div class="tierhead" style="--c:${COL[t]}"><span class="tag">${TIER_NAME[t]}</span><span>${METRES[t]}m · ${list.length}</span></div><div class="chips" style="--c:${COL[t]}">`;
+    if(t===6 && today){ // today's 100m answers stay hidden, apart from one you found yourself
+      const got=list.filter(e=>e[0][0]===mine), rest=list.length-got.length;
+      h+=got.map(chip).join('')+(rest?`<span class="chip locked">${got.length?rest+' more revealed':'Revealed'} tomorrow</span>`:'');
+    } else h+=list.map(chip).join('');
+    h+='</div>';
+  });
+  h+=`<div class="tierhead" style="--c:#ff6b8b"><span class="tag">Held up</span><span>0m</span></div><div class="chips" style="--c:#ff6b8b"><span class="chip${r&&!r.answer?' me':''}">Ran out of time<span class="pc">${fmtPct(cq.held)}</span></span></div>`;
+  $('shBody').innerHTML=h;
+  const m=$('sheetModal'); m.classList.add('on'); m.setAttribute('aria-hidden','false'); m.querySelector('.sheetbox').scrollTop=0;
+  document.body.style.overflow='hidden'; $('shClose').focus();
+}
+function closeSheet(){ const m=$('sheetModal'); if(!m.classList.contains('on')) return; m.classList.remove('on'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+$('shClose').onclick=closeSheet;
+$('sheetModal').addEventListener('click',e=>{ if(e.target.id==='sheetModal') closeSheet(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSheet(); });
+
+const RANKS=[[330,'Hall of Famer','Frankly absurd range.'],[230,'Test centurion','Proper rugby brain.'],[140,'Starting fifteen','You know your game.'],[70,'Impact sub','Solid, if unspectacular.'],[0,'Water carrier','More time on the training pitch needed.']];
+
+function renderFT(){
+  show('ft');
+  const st=store.get('streak',{n:0}); $('hdrScore').innerHTML = G.mode==='daily'&&st.n ? `STREAK<b>🔥 ${st.n}</b>` : `METRES<b>${G.total}m</b>`;
+  $('ftScore').innerHTML=`${G.total}<small>m</small>`;
+  const rk=RANKS.find(r=>G.total>=r[0]); $('ftRank').textContent=rk[1]; $('ftRankLine').textContent=rk[2]+(G.total===600?' Six from your own line!':'');
+  $('ftMatchLabel').textContent='MATCH #'+G.matchNo;
+  const isToday=G.matchNo===MATCH_NO, players=Crowd.players(G.matchNo).toLocaleString('en-GB');
+  const beat=G.total>0 ? Crowd.beat(G.matchNo,G.total) : 0; G.beat=beat;
+  $('ftCrowd').innerHTML = beat ? `Better than <b>${beat}%</b> of ${isToday?"today's ":''}<b>${players}</b> players`
+                                : `<b>${players}</b> players have played this match${isToday?' today':''}`;
+  const qs0=MATCHES[G.matchIdx]; let rare=null;
+  G.results.forEach((r,i)=>{ if(!r.tier) return; const p=Crowd.pctFor(qs0[i],r.answer); if(p!==null && (!rare||p<rare.p)) rare={p,name:r.answer}; });
+  $('ftRare').innerHTML = rare ? `Rarest try: <b>${rare.name}</b> · only ${fmtPct(rare.p)} said it` : '';
+  // try map: one lane per question, from where the break started to the try line
+  let w=pitchSVG(false);
+  const lanes=G.results.map((r,i)=>{ const lx=laneX(i); const lab=`<text x="${lx}" y="38" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#f4f6ff" opacity=".55">${i+1}</text>`;
+    if(!r.tier) return lab+`<circle cx="${lx}" cy="${TRY_Y+8}" r="5.5" fill="none" stroke="var(--t6)" stroke-width="2.4" filter="url(#glow)"/>`;
+    const sy=yAt(mOf(r.tier));
+    return lab+`<line x1="${lx}" y1="${sy}" x2="${lx}" y2="${TRY_Y}" stroke="${COL[r.tier]}" stroke-width="${r.tier>=4?3.6:2.6}" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="${lx}" cy="${sy}" r="3" fill="#fff"/><circle cx="${lx}" cy="${TRY_Y}" r="${r.tier>=4?6:4.5}" fill="${COL[r.tier]}" filter="url(#glow)"/>`; }).join('');
+  w=w.replace('<g id="idle">','<g id="idle" style="display:none">').replace('<g id="actors"></g>','<g id="actors">'+lanes+'</g>');
+  $('trymap').innerHTML=w;
+  // questions
+  const qs=MATCHES[G.matchIdx]; const box=$('ftQs'); box.innerHTML='';
+  const hideSixes = G.matchNo===MATCH_NO;
+  G.results.forEach((r,i)=>{
+    const q=qs[i]; const row=document.createElement('div'); row.className='qrow';
+    row.innerHTML=`<div class="n">${i+1}</div>
+      <div><div class="t">${q.q}</div><div class="a" style="color:${r.tier?COL[r.tier]:'#ff6b8b'}">${r.answer||'Held up'}</div>
+      <div class="said">${r.answer ? fmtPct(Crowd.pctFor(q,r.answer))+' of players said this' : fmtPct(Crowd.q(q).held)+' of players were held up too'}</div>
+      <button class="sheet-btn">All ${q.a.length} answers →</button></div>
+      <div class="r" style="color:${r.tier?COL[r.tier]:'#ff6b8b'}">${mOf(r.tier)}m</div>`;
+    row.querySelector('.sheet-btn').onclick=()=>openSheet(q,r,G.matchNo);
+    box.appendChild(row);
+  });
+  // share
+  const emo={0:'⬛',1:'🟦',2:'🟩',4:'🟪',6:'🟥'};
+  const txt=[`LINEBREAK · Match #${G.matchNo} 🏉`,
+    `${G.total}m`+(beat?` · better than ${beat}% of players`:` · ${rk[1]}`),
+    G.results.map(r=>emo[r.tier]).join(' '),
+    `The obvious answer only gets you over from 5m. Can you beat it?`,
+    SHARE_URL].join('\n');
+  $('sharePre').textContent=txt; $('shareHint').textContent='';
+  $('waBtn').href='https://wa.me/?text='+encodeURIComponent(txt);
+  const flash=(el,msg,back)=>{ el.textContent=msg; clearTimeout(el._h); el._h=setTimeout(()=>el.textContent=back,2200); };
+  const copyText=async()=>{ try{ await navigator.clipboard.writeText(txt); return true; }catch(e){ return false; } };
+  $('copyBtn').textContent='Copy text';
+  $('copyBtn').onclick=async()=>{ if(await copyText()) flash($('copyBtn'),'Copied ✓','Copy text'); else $('shareHint').textContent='Press and hold the text below to copy it.'; };
+  const g=G, img=$('shareImg'), sb=$('shareBtn'); let file=null, durl='';
+  img.removeAttribute('src'); sb.textContent='Share scorecard';
+  fontsReady().then(()=>{
+    if(G!==g) return;
+    durl=shareImage(g,rk).toDataURL('image/png'); img.src=durl;
+    const bin=atob(durl.split(',')[1]), u8=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
+    try{ file=new File([u8],`linebreak-match-${g.matchNo}.png`,{type:'image/png'}); }catch(e){ file=null; }
+  });
+  sb.onclick=async()=>{
+    // 1) native share sheet with the image, 2) share sheet with text only, 3) save image + copy text
+    if(navigator.share){
+      const withImg=file&&{files:[file],text:txt};
+      try{
+        if(withImg&&navigator.canShare&&navigator.canShare(withImg)){ await navigator.share(withImg); return; }
+        await navigator.share({text:txt}); return;
+      }catch(e){ if(e&&e.name==='AbortError') return; }
+    }
+    if(durl){ const a=document.createElement('a'); a.href=durl; a.download=`linebreak-match-${g.matchNo}.png`; document.body.appendChild(a); a.click(); a.remove(); }
+    const copied=await copyText();
+    $('shareHint').textContent = durl ? (copied?'Image saved and text copied. Paste both into the chat.':'Image saved. Copy the text below to go with it.')
+                                      : (copied?'Text copied. Paste it into the chat.':'Press and hold the text below to copy it.');
+  };
+  // ranks table
+  const rt=$('ranksTable'); rt.innerHTML='<h3><span>The table</span><span>Metres</span></h3>';
+  const bands=['330–600','230–329','140–229','70–139','0–69'];
+  RANKS.forEach((r,i)=>{ const d=document.createElement('div'); if(r===rk) d.className='me'; d.innerHTML=`<span>${r[1]}</span><span class="mono">${bands[i]}</span>`; rt.appendChild(d); });
+  // countdown
+  if(G.matchNo===MATCH_NO){
+    const upd=()=>{ const n=new Date(), m=new Date(n); m.setHours(24,0,0,0); const s=Math.floor((m-n)/1000);
+      $('nextInfo').innerHTML=`Next match in <b>${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}</b>`; };
+    upd(); clearInterval(window._cd); window._cd=setInterval(upd,1000);
+  } else { clearInterval(window._cd); $('nextInfo').textContent=`Catch-up match from ${dayDate(G.matchNo)}.`; }
+}
+
+$('playDaily').onclick=()=>start(MATCH_NO);
+
+$('homeBtn').onclick=()=>{ clearInterval(window._cd); show('home'); renderHome(); };
+renderHome();
+// a tab left open overnight picks up the new match when it is looked at again
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden && Math.max(1,dayNum())!==MATCH_NO && !$('play').classList.contains('on')) location.reload(); });
+</script>
+</body>
+</html>
