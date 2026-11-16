@@ -1070,7 +1070,6 @@ function openSheet(q,r,matchNo){
     } else h+=list.map(chip).join('');
     h+='</div>';
   });
-  h+=`<div class="tierhead" style="--c:#ff5252"><span class="tag">No try</span><span>0m</span></div><div class="chips" style="--c:#ff5252"><span class="chip${r&&!r.answer?' me':''}">Ran out of time<span class="pc">${fmtPct(cq.held)}</span></span></div>`;
   $('shBody').innerHTML=h;
   const m=$('sheetModal'); m.classList.add('on'); m.setAttribute('aria-hidden','false'); m.querySelector('.sheetbox').scrollTop=0;
   document.body.style.overflow='hidden'; $('shClose').focus();
