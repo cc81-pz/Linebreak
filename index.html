@@ -24,7 +24,7 @@
   --night:#0e141b; --night2:#151d27; --panel:#1a232e; --line:#2c3847;
   --chalk:#f4f6ff;
   --ink:#f4f6ff; --dim:#9aa7b5; --hot:#ff6a1a; --acc:#c6f432;
-  --t1:#9d4dff; --t2:#c6f432; --t4:#ff3d9a; --t6:#ff6a1a;
+  --t1:#9d4dff; --t2:#2fb4ff; --t4:#ff3d9a; --t6:#ff6a1a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--night);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;min-height:100%}
@@ -69,7 +69,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .ob{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600;font-size:13px;color:var(--dim)}
 .ob.now{border-color:var(--ink);color:var(--ink)}
 .ob.r1{background:var(--t1);color:#fff;border-color:var(--t1)}
-.ob.r2{background:var(--t2);color:#1a2400;border-color:var(--t2)}
+.ob.r2{background:var(--t2);color:#04223a;border-color:var(--t2)}
 .ob.r4{background:var(--t4);color:#2a0418;border-color:var(--t4)}
 .ob.r6{background:var(--t6);color:#2a0d00;border-color:var(--t6);box-shadow:0 0 10px var(--t6)}
 .ob.rW{background:#3a1212;color:#ff9a9a;border-color:#ff4d4d}
@@ -99,7 +99,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 
 /* full time */
 .ft-top{text-align:center;padding:8px 0 4px}
-.ft-top .score{text-transform:none;font-size:96px;line-height:.85;color:var(--acc);text-shadow:0 0 30px rgba(198,244,50,.45)}
+.ft-top .score{text-transform:none;font-size:96px;line-height:.85;color:var(--acc);text-shadow:0 0 8px rgba(198,244,50,.16)}
 .ft-top .score small{font-size:28px;color:var(--dim)}
 .ft-top .rank{font-size:30px;margin-top:6px}
 .ft-top .rankline{color:var(--dim);font-size:14px}
@@ -267,7 +267,8 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
     <div class="card table-ranks" id="ranksTable"><h3><span>The table</span><span>Metres</span></h3></div>
     <div class="next" id="nextInfo"></div>
-    <button class="btn ghost" id="homeBtn" style="margin-top:14px">Back to the clubhouse</button>
+    <button class="btn ghost" id="againBtn" style="margin-top:14px">Play this match again</button>
+    <button class="btn ghost" id="homeBtn" style="margin-top:10px">Back to the clubhouse</button>
   </section>
 </div>
 
@@ -385,6 +386,102 @@ const MATCHES = [
    ["Chester Williams",2,["williams","chester"]],["Joost van der Westhuizen",2,["van der westhuizen","westhuizen","joost"]],
    ["James Small",4,["small"]],["Os du Randt",4,["du randt","randt","os"]],["Ruben Kruger",4,["kruger"]],["Kobus Wiese",4,["wiese"]],["Andre Joubert",4,["joubert"]],
    ["Japie Mulder",6,["mulder"]],["Hennie le Roux",6,["le roux","hennie"]],["Mark Andrews",6,["andrews"]],["Balie Swart",6,["swart"]],["Hannes Strydom",6,["strydom"]],["Chris Rossouw",6,["rossouw"]]]}
+ ],
+ [ // ---------- MATCH D ----------
+  {id:"lions-capt", q:"Name a British & Irish Lions tour captain", s:"The captain named for each tour, 1989–2025", people:true, a:[
+   ["Martin Johnson",1,["johnno"],"1997 and 2001"],["Brian O'Driscoll",1,["odriscoll","o driscoll","bod","brian odriscoll"],"2005"],["Sam Warburton",2,["warburton"],"2013 and 2017"],
+   ["Alun Wyn Jones",2,["awj","alun-wyn jones","alun wyn"],"2021"],["Maro Itoje",2,["itoje"],"2025"],["Paul O'Connell",4,["oconnell","o connell","paul oconnell"],"2009"],
+   ["Gavin Hastings",6,["hastings"],"1993"],["Finlay Calder",6,["calder"],"1989"]]},
+  {id:"eng-2019", q:"Name a player in England's starting XV for the 2019 World Cup final", s:"v South Africa, Yokohama, 2 November 2019 · starters only", people:true, vague:["vunipola"], a:[
+   ["Owen Farrell",1,["farrell"],"Captain"],["Maro Itoje",1,["itoje"]],["Manu Tuilagi",2,["tuilagi"]],["Ben Youngs",2,["youngs"]],["George Ford",2,["ford"]],
+   ["Billy Vunipola",2,["billy"]],["Jonny May",4,["may","johnny may"]],["Tom Curry",4,["curry"]],["Kyle Sinckler",4,["sinckler"],"Went off injured in the third minute"],
+   ["Courtney Lawes",4,["lawes"]],["Jamie George",4,[]],["Mako Vunipola",4,["mako"]],["Elliot Daly",6,["daly","elliott daly"]],["Anthony Watson",6,["watson"]],["Sam Underhill",6,["underhill"]]]},
+  {id:"top14-2425", q:"Name a club that played in the 2024–25 Top 14", s:"France's top division, 2024–25 season", a:[
+   ["Toulouse",1,["stade toulousain"]],["Toulon",1,["rct"]],["La Rochelle",1,["stade rochelais"]],["Racing 92",1,["racing","racing metro"]],
+   ["Bordeaux-Bègles",2,["bordeaux","ubb","bordeaux begles","begles"]],["Clermont",2,["clermont auvergne","asm"]],["Stade Français",2,["stade francais","paris"]],
+   ["Montpellier",4,[]],["Castres",4,[]],["Lyon",4,["lou"]],["Perpignan",4,["usap"]],["Bayonne",4,["aviron bayonnais"]],
+   ["Pau",6,["section paloise"]],["Vannes",6,[],"Their first season in the top flight"]]},
+  {id:"rwc23-qf", q:"Name a team that reached the quarter-finals of the 2023 World Cup", s:"Men's Rugby World Cup, France 2023", a:[
+   ["South Africa",1,["sa","rsa","springboks"]],["New Zealand",1,["nz","all blacks"]],["France",1,[]],["Ireland",1,[]],
+   ["England",2,[]],["Wales",2,[]],["Argentina",4,["pumas"]],["Fiji",6,[]]]},
+  {id:"rwc-top-points", q:"Name the top points scorer at a men's Rugby World Cup", s:"The leading scorer at each tournament, 1987–2023", people:true, a:[
+   ["Jonny Wilkinson",1,["wilko","johnny wilkinson"],"2003"],["Handré Pollard",2,["pollard","handre pollard","handre"],"2019"],["Owen Farrell",2,["farrell"],"2023"],
+   ["Percy Montgomery",4,["montgomery"],"2007"],["Grant Fox",4,["fox"],"1987"],["Morné Steyn",4,["steyn","morne steyn","morne"],"2011"],
+   ["Nicolás Sánchez",6,["sanchez","nicolas sanchez"],"2015"],["Gonzalo Quesada",6,["quesada"],"1999"],["Thierry Lacroix",6,["lacroix"],"1995"],["Ralph Keyes",6,["keyes"],"1991"]]},
+  {id:"ways-to-score", q:"Name a way to score points in rugby union", s:"Under the current laws", a:[
+   ["Try",1,[],"5 points"],["Penalty goal",2,["penalty","penalty kick","kick at goal"],"3 points"],["Conversion",2,["conversion kick","converted try"],"2 points"],
+   ["Drop goal",4,["dropped goal","drop kick","dropgoal"],"3 points"],["Penalty try",6,[],"7 points, no conversion needed"]]}
+ ],
+ [ // ---------- MATCH E ----------
+  {id:"nz-2011", q:"Name a player in New Zealand's starting XV for the 2011 World Cup final", s:"v France, Eden Park, 23 October 2011 · starters only", people:true, a:[
+   ["Richie McCaw",1,["mccaw"],"Captain"],["Ma'a Nonu",1,["nonu","maa nonu"]],["Kieran Read",2,["read"]],["Conrad Smith",2,["smith"]],["Piri Weepu",2,["weepu"]],
+   ["Israel Dagg",2,["dagg"]],["Jerome Kaino",4,["kaino"]],["Brad Thorn",4,["thorn"]],["Sam Whitelock",4,["whitelock"]],["Tony Woodcock",4,["woodcock"],"Scored the All Blacks' try"],
+   ["Keven Mealamu",4,["mealamu","kevin mealamu"]],["Cory Jane",4,["jane"]],["Aaron Cruden",6,["cruden"]],["Richard Kahui",6,["kahui"]],["Owen Franks",6,["franks"]]]},
+  {id:"eng-champs", q:"Name a club that has been champions of England", s:"English league champions, 1988–2025", a:[
+   ["Leicester Tigers",1,["leicester","tigers"]],["Saracens",1,["sarries"]],["Bath",2,[],"Champions again in 2025"],["Wasps",2,["london wasps"]],
+   ["Exeter Chiefs",2,["exeter","chiefs"]],["Harlequins",4,["quins"]],["Northampton Saints",4,["northampton","saints"]],
+   ["Sale Sharks",6,["sale","sharks"],"2006"],["Newcastle Falcons",6,["newcastle","falcons"],"1998"]]},
+  {id:"super-2025", q:"Name a team in Super Rugby Pacific", s:"The 2025 season", a:[
+   ["Crusaders",1,["canterbury crusaders"]],["Blues",1,["auckland blues"]],["Chiefs",2,["waikato chiefs"]],["Hurricanes",2,["canes","wellington hurricanes"]],
+   ["Brumbies",2,["act brumbies"]],["Waratahs",2,["nsw waratahs","tahs"]],["Highlanders",4,["otago highlanders"]],["Reds",4,["queensland reds","queensland"]],
+   ["Western Force",6,["force"]],["Fijian Drua",6,["drua","fiji drua"]],["Moana Pasifika",6,["moana","pasifika"]]]},
+  {id:"6n-potc", q:"Name a men's Six Nations Player of the Championship", s:"Winners of the award, 2004–2025", people:true, a:[
+   ["Antoine Dupont",1,["dupont"],"2020, 2022 and 2023"],["Brian O'Driscoll",1,["odriscoll","o driscoll","bod","brian odriscoll"],"2006, 2007 and 2009"],
+   ["Stuart Hogg",2,["hogg"],"2016 and 2017"],["Alun Wyn Jones",2,["awj","alun-wyn jones","alun wyn"],"2019"],["Paul O'Connell",2,["oconnell","o connell","paul oconnell"],"2015"],
+   ["Shane Williams",2,["shane"],"2008"],["Leigh Halfpenny",4,["halfpenny"],"2013"],["Louis Bielle-Biarrey",4,["bielle-biarrey","bielle biarrey","lbb"],"2025"],
+   ["Mike Brown",4,["brown"],"2014"],["Tommy Bowe",4,["bowe"],"2010"],["Jacob Stockdale",4,["stockdale"],"2018"],["Hamish Watson",4,["watson"],"2021"],
+   ["Tommaso Menoncello",6,["menoncello"],"2024"],["Dan Lydiate",6,["lydiate"],"2012"],["Martyn Williams",6,["martyn"],"2005"],["Gordon D'Arcy",6,["darcy","d arcy","gordon darcy"],"2004"],["Andrea Masi",6,["masi"],"2011"]], vague:["williams"]},
+  {id:"rwc-third", q:"Name a country that has finished third at a men's Rugby World Cup", s:"Winners of the bronze final, 1987–2023", a:[
+   ["New Zealand",1,["nz","all blacks"],"1991, 2003 and 2019"],["South Africa",2,["sa","rsa","springboks"],"1999 and 2015"],["England",2,[],"2023"],
+   ["Australia",4,["aus","wallabies"],"2011"],["France",4,[],"1995"],["Wales",4,[],"1987"],["Argentina",6,["pumas"],"2007"]]},
+  {id:"eng-coaches", q:"Name an England men's head coach", s:"Permanent appointments, 1997–2025", people:true, a:[
+   ["Eddie Jones",1,["eddie"]],["Clive Woodward",1,["woodward","sir clive"]],["Steve Borthwick",2,["borthwick"]],["Martin Johnson",2,["johnno"],"Team manager, 2008–2011"],
+   ["Stuart Lancaster",4,["lancaster"]],["Andy Robinson",6,["robinson"]],["Brian Ashton",6,["ashton"]]]}
+ ],
+ [ // ---------- MATCH F ----------
+  {id:"aus-2015", q:"Name a player in Australia's starting XV for the 2015 World Cup final", s:"v New Zealand, Twickenham, 31 October 2015 · starters only", people:true, a:[
+   ["David Pocock",1,["pocock"]],["Michael Hooper",1,["hooper"]],["Israel Folau",1,["folau"]],["Will Genia",2,["genia"]],["Matt Giteau",2,["giteau"]],
+   ["Adam Ashley-Cooper",2,["ashley-cooper","ashley cooper","aac"]],["Bernard Foley",2,["foley"]],["Stephen Moore",4,["moore"],"Captain"],["Drew Mitchell",4,["mitchell"]],
+   ["Tevita Kuridrani",4,["kuridrani"]],["Sekope Kepu",4,["kepu"]],["Scott Fardy",6,["fardy"]],["Rob Simmons",6,["simmons"]],["Kane Douglas",6,["douglas"]],["Scott Sio",6,["sio"]]]},
+  {id:"top14-champs", q:"Name a club that has won the French championship this century", s:"Top 16 and Top 14 champions, 2000–2025", a:[
+   ["Toulouse",1,["stade toulousain"]],["Toulon",2,["rct"],"2014"],["Stade Français",2,["stade francais","paris"]],["Clermont",2,["clermont auvergne","asm"]],
+   ["Racing 92",4,["racing","racing metro"],"2016"],["Biarritz",4,["biarritz olympique"]],["Montpellier",6,[],"2022"],["Castres",6,[],"2013 and 2018"],["Perpignan",6,["usap"],"2009"]]},
+  {id:"urc-champs", q:"Name a team that has won the United Rugby Championship or its forerunners", s:"Celtic League, Pro12, Pro14 and URC, 2002–2025", a:[
+   ["Leinster",1,[]],["Munster",1,[]],["Glasgow Warriors",2,["glasgow","warriors"]],["Ospreys",2,[]],["Stormers",4,["dhl stormers"],"2022"],
+   ["Scarlets",4,["llanelli scarlets","llanelli"]],["Ulster",6,[],"2006"],["Connacht",6,[],"2016"]]},
+  {id:"rwc-top-tries", q:"Name a player who has finished top try scorer at a men's Rugby World Cup", s:"Outright or shared, 1987–2023", people:true, a:[
+   ["Jonah Lomu",1,["lomu"],"1995 and 1999"],["Bryan Habana",1,["habana","brian habana"],"2007"],["Will Jordan",2,["jordan"],"2023"],["Julian Savea",2,["savea"],"2015"],
+   ["David Campese",2,["campese","campo"],"1991"],["Josh Adams",4,["adams"],"2019"],["Chris Ashton",4,["ashton"],"2011"],["Doug Howlett",4,["howlett"],"2003"],
+   ["John Kirwan",4,["kirwan"],"1987"],["Mils Muliaina",6,["muliaina"],"2003"],["Vincent Clerc",6,["clerc"],"2011"],["Marc Ellis",6,["ellis"],"1995"],
+   ["Craig Green",6,["green"],"1987"],["Jean-Baptiste Lafond",6,["lafond","jean baptiste lafond"],"1991"]]},
+  {id:"oly-7s", q:"Name a country that has won an Olympic medal in men's rugby sevens", s:"Rio 2016, Tokyo 2020 and Paris 2024", a:[
+   ["Fiji",1,[],"Gold twice, then silver"],["France",1,[],"Gold in 2024"],["New Zealand",2,["nz"],"Silver in 2020"],["South Africa",4,["sa","rsa","blitzboks"],"Bronze twice"],
+   ["Great Britain",4,["gb","team gb","britain","uk"],"Silver in 2016"],["Argentina",6,["pumas"],"Bronze in 2020"]]},
+  {id:"6n-grounds", q:"Name the home ground of a men's Six Nations team", s:"Regular home stadiums, 2025", a:[
+   ["Twickenham",1,["allianz stadium","twickers","hq"]],["Principality Stadium",1,["millennium stadium","principality","millennium","cardiff"]],["Murrayfield",2,["scottish gas murrayfield"]],
+   ["Aviva Stadium",2,["aviva","lansdowne road","lansdowne"]],["Stade de France",4,["saint-denis","st denis"]],["Stadio Olimpico",6,["olimpico","rome"]]]}
+ ],
+ [ // ---------- MATCH G ----------
+  {id:"sa-2007", q:"Name a player in South Africa's starting XV for the 2007 World Cup final", s:"v England, Stade de France, 20 October 2007 · starters only", people:true, vague:["fourie"], a:[
+   ["Bryan Habana",1,["habana","brian habana"]],["Victor Matfield",1,["matfield"],"Player of the Match"],["John Smit",2,["smit"],"Captain"],["Schalk Burger",2,["burger","schalk"]],
+   ["Bakkies Botha",2,["botha","bakkies"]],["Percy Montgomery",2,["montgomery","percy"]],["Fourie du Preez",2,["du preez"]],["Os du Randt",4,["du randt","randt","os"]],
+   ["François Steyn",4,["steyn","francois steyn","frans steyn","frans"]],["Butch James",4,["james","butch"]],["JP Pietersen",4,["pietersen","j p pietersen"]],
+   ["Juan Smith",6,["smith"]],["Jaque Fourie",6,["jacques fourie","jaque"]],["Danie Rossouw",6,["rossouw"]],["CJ van der Linde",6,["van der linde","c j van der linde","linde"]]]},
+  {id:"nz-coaches", q:"Name an All Blacks head coach of the professional era", s:"1996–2025", people:true, a:[
+   ["Steve Hansen",1,["hansen"]],["Graham Henry",1,["henry","sir graham"]],["Scott Robertson",2,["robertson","razor"]],["Ian Foster",2,["foster"]],
+   ["Wayne Smith",4,["smith"],"2000–2001"],["John Mitchell",6,["mitchell"],"2002–2003"],["John Hart",6,["hart"],"1996–1999"]], vague:["john"]},
+  {id:"6n-trophies", q:"Name a trophy contested during the men's Six Nations", s:"Trophies played for between particular teams, 2025", a:[
+   ["Calcutta Cup",1,["calcutta"],"England v Scotland"],["Triple Crown",1,[],"The four home nations"],["Millennium Trophy",4,["millennium"],"England v Ireland"],
+   ["Giuseppe Garibaldi Trophy",4,["garibaldi","garibaldi trophy"],"France v Italy"],["Doddie Weir Cup",4,["doddie weir","doddie"],"Scotland v Wales"],
+   ["Centenary Quaich",6,["quaich"],"Ireland v Scotland"],["Auld Alliance Trophy",6,["auld alliance"],"France v Scotland"],["Cuttitta Cup",6,["cuttitta"],"Italy v Scotland"]]},
+  {id:"rwc19-qf", q:"Name a team that reached the quarter-finals of the 2019 World Cup", s:"Men's Rugby World Cup, Japan 2019", a:[
+   ["South Africa",1,["sa","rsa","springboks"]],["England",1,[]],["New Zealand",1,["nz","all blacks"]],["Wales",2,[]],["Ireland",2,[]],
+   ["Australia",4,["aus","wallabies"]],["Japan",4,[],"Their first quarter-final"],["France",6,[]]]},
+  {id:"grand-slam", q:"Name a country that has won a Grand Slam", s:"Men's Five and Six Nations, 1908–2025", a:[
+   ["England",1,[]],["Ireland",1,[]],["France",2,[]],["Wales",2,[]],["Scotland",6,[],"1925, 1984 and 1990"]]},
+  {id:"top-ten", q:"Name a nation in the Six Nations or the Rugby Championship", s:"The ten men's teams in the two annual championships", a:[
+   ["New Zealand",1,["nz","all blacks"]],["South Africa",1,["sa","rsa","springboks"]],["England",1,[]],["Ireland",1,[]],["France",1,[]],
+   ["Wales",2,[]],["Scotland",2,[]],["Australia",2,["aus","wallabies"]],["Italy",4,["azzurri"]],["Argentina",6,["pumas","los pumas"]]]}
  ]
 ];
 
@@ -510,7 +607,7 @@ const yAt=m=>TRY_Y+m*PX;
 const METRES={0:0,1:5,2:22,4:50,6:100};
 const mOf=t=>METRES[t]||0;
 const COL={1:'var(--t1)',2:'var(--t2)',4:'var(--t4)',6:'var(--t6)'};
-const HEX={1:'#9d4dff',2:'#c6f432',4:'#ff3d9a',6:'#ff6a1a'};
+const HEX={1:'#9d4dff',2:'#2fb4ff',4:'#ff3d9a',6:'#ff6a1a'};
 const TIER={1:{label:'Pick and go',name:'From 5m',hint:'An obvious one'},2:{label:'Line break',name:'From the 22',hint:'Decent'},
             4:{label:'Breakaway',name:'From halfway',hint:'Found the gap'},6:{label:'Length of the field',name:'Own line',hint:'Right from your own line'}};
 const REF_CALLS=["Knock-on!","Forward pass!","High tackle — the TMO's having a look…","Not releasing!","Crossing!","Offside!","Not straight!","Collapsed scrum!","Hands in the ruck!"];
@@ -562,7 +659,7 @@ function renderHome(){
   const done=store.get('day-'+MATCH_NO,null), live=store.get('live-'+MATCH_NO,null);
   $('playDaily').textContent = done ? 'See today\'s scorecard →' : live ? `Resume Match #${MATCH_NO} →` : `Kick off: Match #${MATCH_NO} →`;
   $('liveCount').innerHTML=`<i></i><b>${Crowd.players(MATCH_NO).toLocaleString('en-GB')}</b> players so far today`;
-  const totals=[]; for(let n=1;n<=MATCH_NO;n++){ const r=store.get('day-'+n,null); if(r) totals.push(r.total); }
+  const totals=[]; for(let n=1;n<=Math.max(MATCH_NO,MATCHES.length);n++){ const r=store.get('day-'+n,null); if(r) totals.push(r.total); }
   $('statsWrap').style.display=totals.length?'block':'none';
   if(totals.length){ const stn=store.get('streak',{n:0,last:0}), cur=stn.last>=MATCH_NO-1?stn.n:0;
     const cells=[[totals.length,'Played'],[Math.round(totals.reduce((a,b)=>a+b,0)/totals.length)+'m','Average'],[Math.max(...totals)+'m','Best'],[cur,'Streak']];
@@ -572,10 +669,13 @@ function renderHome(){
   const st=store.get('streak',{n:0,last:0});
   $('hdrScore').innerHTML = st.n && st.last>=MATCH_NO-1 ? `STREAK<b>🔥 ${st.n}</b>` : '';
   const ar=$('archive'); ar.innerHTML='';
-  $('archiveSub').style.display=MATCH_NO>1?'block':'none';
-  for(let n=MATCH_NO-1;n>=Math.max(1,MATCH_NO-7);n--){ const r=store.get('day-'+n,null), lv=!r&&store.get('live-'+n,null); const b=document.createElement('button');
+  // Preview: every match in the bank is open to play, not only the ones whose day has come
+  const last=Math.max(MATCH_NO,MATCHES.length);
+  $('archiveSub').style.display=last>1?'block':'none';
+  $('archiveSub').textContent=MATCH_NO<MATCHES.length?'More matches: the whole first week is open during the preview':'Previous matches: catch up on the last week';
+  for(let n=Math.max(1,MATCH_NO-7);n<=last;n++){ if(n===MATCH_NO) continue; const r=store.get('day-'+n,null), lv=!r&&store.get('live-'+n,null); const b=document.createElement('button');
     b.className='btn ghost netbtn'+(r?' played':'');
-    b.innerHTML=`<span>#${n} · ${dayDate(n)}</span><small>${r?r.total+'m ✓':lv?'Resume →':'Play →'}</small>`;
+    b.innerHTML=`<span>#${n} · ${n<MATCH_NO?dayDate(n):'Preview'}</span><small>${r?r.total+'m ✓':lv?'Resume →':'Play →'}</small>`;
     b.onclick=()=>start(n); ar.appendChild(b); }
 }
 
@@ -906,7 +1006,7 @@ function shareImage(g,rk){
   // score in metres
   x.textAlign='left'; x.font=D+'230px'+F; const tw=x.measureText(String(g.total)).width;
   x.font=D+'90px'+F; const sw=x.measureText('m').width, gap=14, left=(W-(tw+gap+sw))/2;
-  x.shadowColor=ACC; x.shadowBlur=34; x.fillStyle=ACC; x.font=D+'230px'+F; x.fillText(g.total,left,360); x.shadowBlur=0;
+  x.shadowColor=ACC; x.shadowBlur=6; x.fillStyle=ACC; x.font=D+'230px'+F; x.fillText(g.total,left,360); x.shadowBlur=0;
   x.fillStyle='#9aa7b5'; x.font=D+'90px'+F; x.fillText('m',left+tw+gap,360);
   x.textAlign='center'; x.fillStyle='#f4f6ff'; x.font=D+'80px'+F; x.fillText(rk[1].toUpperCase(),W/2,452);
   if(g.beat){ const label='BETTER THAN '+g.beat+'% OF PLAYERS'; x.font='600 30px'+M; const pw=x.measureText(label).width+64, px=(W-pw)/2, py=486, ph=60;
@@ -1023,7 +1123,7 @@ function renderFT(){
     box.appendChild(row);
   });
   // share
-  const emo={0:'⬛',1:'🟪',2:'🟩',4:'🟥',6:'🟧'};
+  const emo={0:'⬛',1:'🟪',2:'🟦',4:'🟥',6:'🟧'};
   const txt=[`LINEBREAK · Match #${G.matchNo} 🏉`,
     `${G.total}m`+(beat?` · better than ${beat}% of players`:` · ${rk[1]}`),
     G.results.map(r=>emo[r.tier]).join(' '),
@@ -1071,6 +1171,7 @@ function renderFT(){
 
 $('playDaily').onclick=()=>start(MATCH_NO);
 
+$('againBtn').onclick=()=>{ const n=G.matchNo; clearInterval(window._cd); store.set('day-'+n,null); store.set('live-'+n,null); start(n); };
 $('homeBtn').onclick=()=>{ clearInterval(window._cd); show('home'); renderHome(); };
 renderHome();
 // a tab left open overnight picks up the new match when it is looked at again
