@@ -190,7 +190,7 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <ul class="rules">
       <li>Six questions, 20 seconds each. Any correct answer is a try.</li>
       <li>The rarer your answer, the further back your break starts. Your score is the metres you gain.</li>
-      <li>Wrong answers just draw the whistle, so go again. Run out of time and the move breaks down: tackled, held up or knocked on.</li>
+      <li>A wrong answer is a tackle, so get up and go again. Run out of time and the move breaks down: held up, knocked on or into touch.</li>
       <div class="tiers">
         <div class="tier"><b style="color:var(--t6)">100</b><small>Length of the field</small></div>
         <div class="tier"><b style="color:var(--t4)">50</b><small>Breakaway</small></div>
@@ -610,7 +610,6 @@ const COL={1:'var(--t1)',2:'var(--t2)',4:'var(--t4)',6:'var(--t6)'};
 const HEX={1:'#9d4dff',2:'#2fb4ff',4:'#ff3d9a',6:'#ff6a1a'};
 const TIER={1:{label:'Pick and go',name:'From 5m',hint:'An obvious one'},2:{label:'Line break',name:'From the 22',hint:'Decent'},
             4:{label:'Breakaway',name:'From halfway',hint:'Found the gap'},6:{label:'Length of the field',name:'Own line',hint:'Right from your own line'}};
-const REF_CALLS=["Knock-on!","Forward pass!","High tackle — the TMO's having a look…","Not releasing!","Crossing!","Offside!","Not straight!","Collapsed scrum!","Hands in the ruck!"];
 const laneX=i=>X0+(i+1)*30; // the six lanes on the full-time try map
 function pitchSVG(crowd=true,extra=''){
   let s=`<defs>
@@ -706,7 +705,7 @@ function startQ(resume){
   $('qNo').textContent=`QUESTION ${G.qi+1}/6 · MATCH #${G.matchNo}${G.matchNo===MATCH_NO?' · TODAY':''}`;
   $('qText').textContent=q.q; $('qSub').textContent=q.s;
   $('ground').innerHTML=tvPitch();
-  $('callout').classList.remove('show'); $('feedback').classList.remove('on'); $('missList').textContent=G.misses.length?'Whistled: '+G.misses.join(' · '):'';
+  $('callout').classList.remove('show'); $('feedback').classList.remove('on'); $('missList').textContent=G.misses.length?'Tackled: '+G.misses.join(' · '):'';
   $('answerForm').style.display='flex';
   const inp=$('answer'); inp.value=''; inp.disabled=false; inp.focus();
   renderTracker();
@@ -734,10 +733,10 @@ function submitAnswer(){
   }
   if(i<0){
     G.misses.push(v); inp.value='';
-    const t=$('missToast'); t.textContent=REF_CALLS[Math.floor(Math.random()*REF_CALLS.length)]+'  ✗ '+v; t.className='miss show';
+    const t=$('missToast'); t.textContent='Tackled!  ✗ '+v; t.className='miss show';
     clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),1800);
     $('groundbox').classList.remove('shake'); void $('groundbox').offsetWidth; $('groundbox').classList.add('shake');
-    $('missList').textContent='Whistled: '+G.misses.join(' · '); saveLive();
+    $('missList').textContent='Tackled: '+G.misses.join(' · '); saveLive();
     inp.focus(); return;
   }
   finishQ(i);
@@ -782,7 +781,7 @@ const TV={F:439,D0:130,CH:110,HOR:-134};
 function pj(u,v){ const D=TV.D0+v; return [200+TV.F*(u-50)/D, TV.HOR+TV.F*TV.CH/D, TV.F/D]; }
 const pt=(u,v)=>{ const p=pj(u,v); return p[0].toFixed(1)+','+p[1].toFixed(1); };
 const FAILS={held:['Held up!','Held up over the line'],tackled:['Tackled!','Brought down short'],knockon:['Knock-on!','Spilled it forward'],touch:['Into touch!','Bundled into touch']};
-const FAIL_KINDS=['held','tackled','knockon','touch'];
+const FAIL_KINDS=['held','knockon','touch']; // 'tackled' is what a wrong answer is, so it is not a way to run out of time
 function tvPitch(){
   const NAT=['#9d4dff','#c6f432','#ff3d9a','#6a2be0','#ff6a1a','#ffb020'];
   const poly=(u0,u1,v0,v1,fill)=>`<polygon points="${pt(u0,v0)} ${pt(u1,v0)} ${pt(u1,v1)} ${pt(u0,v1)}" fill="${fill}"/>`;
