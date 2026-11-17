@@ -503,6 +503,108 @@ const MATCHES = [
  ]
 ];
 
+/* ============ DAILY RELEASES ============
+   From Match #8 each match sits in its own slot, MATCHES[day-1], and goes live the evening before its day.
+   New ones are inserted just above the marker line below. A day with no match yet falls back to an earlier one. */
+MATCHES[7]=[ // ---------- MATCH #8 ----------
+  {id:"lions-2013-t3", q:"Name a player in the Lions' starting XV for the 2013 third Test", s:"v Australia, Sydney, 6 July 2013 · starters only · the series decider", people:true, a:[
+   ["Leigh Halfpenny", 1, ["halfpenny"], "Player of the Series"],
+   ["George North", 1, ["north"]],
+   ["Johnny Sexton", 1, ["sexton", "jonathan sexton", "jonny sexton"]],
+   ["Alun Wyn Jones", 1, ["awj", "alun-wyn jones", "alun wyn"], "Captain, with Sam Warburton injured"],
+   ["Jamie Roberts", 2, ["roberts"]],
+   ["Jonathan Davies", 2, ["davies", "jon davies", "foxy"]],
+   ["Mike Phillips", 2, ["phillips"]],
+   ["Tommy Bowe", 2, ["bowe"]],
+   ["Adam Jones", 2, ["adam jones", "bomb"]],
+   ["Toby Faletau", 4, ["faletau", "taulupe faletau"]],
+   ["Sean O'Brien", 4, ["obrien", "o brien", "sean obrien", "sean o brien"]],
+   ["Richard Hibbard", 4, ["hibbard"]],
+   ["Alex Corbisiero", 4, ["corbisiero", "corbs"], "Scored in the second minute"],
+   ["Dan Lydiate", 6, ["lydiate"]],
+   ["Geoff Parling", 6, ["parling"]]]},
+  {id:"bilateral-trophies", q:"Name a trophy contested between two men's national teams, outside the Six Nations", s:"Trophies for Tests between the top nations, past or present", a:[
+   ["Bledisloe Cup", 1, ["bledisloe"], "New Zealand v Australia"],
+   ["Freedom Cup", 2, [], "New Zealand v South Africa"],
+   ["Ella-Mobbs Trophy", 2, ["ella mobbs", "ella mobbs trophy"], "England v Australia, since 2022"],
+   ["Cook Cup", 4, [], "England v Australia, until 2022"],
+   ["Hillary Shield", 4, ["hillary"], "England v New Zealand"],
+   ["Mandela Challenge Plate", 4, ["mandela plate", "mandela challenge", "nelson mandela plate", "mandela"], "South Africa v Australia"],
+   ["Tom Richards Cup", 4, ["tom richards", "richards cup"], "Lions v Australia"],
+   ["Puma Trophy", 6, ["puma"], "Argentina v Australia"],
+   ["Dave Gallaher Trophy", 6, ["gallaher", "dave gallaher", "gallaher trophy"], "France v New Zealand"],
+   ["Prince William Cup", 6, ["prince william"], "Wales v South Africa"],
+   ["James Bevan Trophy", 6, ["bevan", "james bevan"], "Wales v Australia"],
+   ["Lansdowne Cup", 6, ["lansdowne"], "Ireland v Australia"],
+   ["Hopetoun Cup", 6, ["hopetoun"], "Scotland v Australia"],
+   ["Trophée des Bicentenaires", 6, ["bicentenaire", "bicentenaires", "trophee des bicentenaires", "bicentenary trophy"], "France v Australia"]]},
+  {id:"rwc-final-tries", q:"Name a player who scored a try in a men's Rugby World Cup final", s:"Every final, 1987–2023", people:true, a:[
+   ["Jason Robinson", 1, ["robinson", "billy whizz"], "2003"],
+   ["Beauden Barrett", 1, ["beauden", "barrett"], "2015 and 2023"],
+   ["Cheslin Kolbe", 1, ["kolbe"], "2019"],
+   ["Makazole Mapimpi", 2, ["mapimpi"], "2019, South Africa's first try in a final"],
+   ["Ma'a Nonu", 2, ["nonu", "maa nonu", "ma a nonu"], "2015"],
+   ["David Pocock", 2, ["pocock"], "2015"],
+   ["Tony Woodcock", 4, ["woodcock"], "2011"],
+   ["Thierry Dusautoir", 4, ["dusautoir"], "2011"],
+   ["Lote Tuqiri", 4, ["tuqiri"], "2003"],
+   ["Nehe Milner-Skudder", 4, ["milner-skudder", "milner skudder", "skudder"], "2015"],
+   ["Tevita Kuridrani", 4, ["kuridrani"], "2015"],
+   ["Owen Finegan", 6, ["finegan"], "1999"],
+   ["Ben Tune", 6, ["tune"], "1999"],
+   ["Tony Daly", 6, ["daly"], "1991"],
+   ["David Kirk", 6, ["kirk"], "1987"],
+   ["Michael Jones", 6, ["michael jones", "jones"], "1987"],
+   ["John Kirwan", 6, ["kirwan"], "1987"],
+   ["Pierre Berbizier", 6, ["berbizier"], "1987"]]},
+  {id:"prem-grounds", q:"Name the home ground of a Premiership club in 2024–25", s:"Gallagher Premiership, 2024–25 · old and sponsor names count", vague:["twickenham"], a:[
+   ["Twickenham Stoop", 1, ["the stoop", "stoop"], "Harlequins"],
+   ["Welford Road", 1, ["mattioli woods welford road"], "Leicester Tigers"],
+   ["Kingsholm", 1, [], "Gloucester"],
+   ["Franklin's Gardens", 2, ["franklins gardens", "franklin gardens", "cinch stadium", "franklin s gardens"], "Northampton Saints"],
+   ["The Recreation Ground", 2, ["the rec", "rec", "recreation ground"], "Bath"],
+   ["Sandy Park", 2, [], "Exeter Chiefs"],
+   ["Ashton Gate", 2, [], "Bristol Bears"],
+   ["StoneX Stadium", 4, ["stonex", "allianz park", "barnet copthall", "copthall"], "Saracens"],
+   ["Kingston Park", 6, [], "Newcastle"],
+   ["Salford Community Stadium", 4, ["aj bell", "aj bell stadium", "salford"], "Sale Sharks"]]},
+  {id:"ire-2009-gs", q:"Name a player in Ireland's starting XV for the 2009 Grand Slam decider", s:"v Wales, Millennium Stadium, 21 March 2009 · starters only", people:true, a:[
+   ["Brian O'Driscoll", 1, ["odriscoll", "o driscoll", "bod", "drico", "brian odriscoll", "brian o driscoll"], "Captain"],
+   ["Ronan O'Gara", 1, ["ogara", "o gara", "rog", "ronan ogara", "ronan o gara"], "The drop goal with two minutes left"],
+   ["Paul O'Connell", 1, ["oconnell", "o connell", "paul oconnell", "poc", "paul o connell"]],
+   ["Tommy Bowe", 2, ["bowe"]],
+   ["Rob Kearney", 2, ["kearney"]],
+   ["Jamie Heaslip", 2, ["heaslip"]],
+   ["Gordon D'Arcy", 2, ["darcy", "d arcy", "gordon darcy", "gordon d arcy"]],
+   ["Stephen Ferris", 4, ["ferris"]],
+   ["David Wallace", 4, ["wallace"]],
+   ["Jerry Flannery", 4, ["flannery"]],
+   ["John Hayes", 4, ["hayes", "the bull"]],
+   ["Luke Fitzgerald", 4, ["fitzgerald"]],
+   ["Donncha O'Callaghan", 4, ["ocallaghan", "o callaghan", "donncha ocallaghan", "donnacha ocallaghan", "donncha o callaghan"]],
+   ["Marcus Horan", 6, ["horan"]],
+   ["Tomás O'Leary", 6, ["oleary", "o leary", "tomas oleary", "tomas o'leary", "tomas o leary"]]]},
+  {id:"team-nicknames", q:"Name the nickname of a men's national rugby team", s:"Nicknames of teams that have played at a World Cup", a:[
+   ["All Blacks", 1, ["the all blacks"], "New Zealand"],
+   ["Springboks", 1, ["boks", "bokke", "the springboks", "springbok"], "South Africa"],
+   ["Wallabies", 1, ["wallaby", "the wallabies"], "Australia"],
+   ["Pumas", 2, ["los pumas", "the pumas"], "Argentina"],
+   ["Les Bleus", 2, ["bleus", "xv de france", "le xv de france"], "France"],
+   ["Azzurri", 2, ["gli azzurri"], "Italy"],
+   ["Brave Blossoms", 4, ["blossoms", "cherry blossoms"], "Japan"],
+   ["Flying Fijians", 4, ["fijians"], "Fiji"],
+   ["Manu Samoa", 4, ["manu"], "Samoa"],
+   ["Ikale Tahi", 6, ["sea eagles", "'ikale tahi"], "Tonga"],
+   ["Lelos", 6, ["the lelos"], "Georgia"],
+   ["Oaks", 6, ["the oaks", "stejarii"], "Romania"],
+   ["Eagles", 6, ["the eagles", "usa eagles"], "USA"],
+   ["Los Teros", 6, ["teros"], "Uruguay"],
+   ["Welwitschias", 6, ["welwitschia"], "Namibia"],
+   ["Os Lobos", 6, ["lobos", "wolves"], "Portugal"],
+   ["Los Cóndores", 6, ["condores", "los condores", "condors"], "Chile"]]}
+];
+// @@NEXT_MATCH@@
+
 /* ============ MATCHING ============ */
 function norm(s){
   return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
@@ -568,8 +670,8 @@ const LAUNCH=new Date(2026,10,10); // Match #1 is 10 Nov 2026
 function dayNum(){ const t=new Date(); t.setHours(0,0,0,0); return Math.floor((t-LAUNCH)/864e5)+1; }
 const MATCH_NO=Math.max(1,dayNum());
 function dayDate(n){ const d=new Date(LAUNCH); d.setDate(d.getDate()+n-1); return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); }
-function matchIdx(n){ return (n-1)%MATCHES.length; }
-const TODAY_IDX=(MATCH_NO-1)%MATCHES.length;
+function matchIdx(n){ if(MATCHES[n-1]) return n-1; let k=0; while(MATCHES[k]) k++; return (n-1)%k; }
+const TODAY_IDX=matchIdx(MATCH_NO);
 const store={get(k,d){try{const v=localStorage.getItem('linebreak:'+k);return v?JSON.parse(v):d}catch(e){return d}},
              set(k,v){try{localStorage.setItem('linebreak:'+k,JSON.stringify(v))}catch(e){}}};
 const SITE="https://cc81-pz.github.io/Linebreak/"; // the link every share points at
@@ -1201,6 +1303,8 @@ $('playDaily').onclick=()=>start(MATCH_NO);
 
 $('againBtn').onclick=()=>{ const n=G.matchNo; clearInterval(window._cd); store.set('day-'+n,null); store.set('live-'+n,null); start(n); };
 $('homeBtn').onclick=()=>{ clearInterval(window._cd); show('home'); renderHome(); };
+// A day whose questions were replaced: drop any result saved against the old questions
+for(let n=1;n<=MATCH_NO;n++) ['day-','live-'].forEach(k=>{ const r=store.get(k+n,null); if(r && r.matchIdx!==undefined && r.matchIdx!==matchIdx(n)) store.set(k+n,null); });
 renderHome();
 // a tab left open overnight picks up the new match when it is looked at again
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden && Math.max(1,dayNum())!==MATCH_NO && !$('play').classList.contains('on')) location.reload(); });
