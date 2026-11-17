@@ -138,6 +138,23 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .cdbox .sep{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:900;font-size:34px;line-height:1.2;color:var(--dim);opacity:.6}
 .cdbox .alt{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;color:var(--dim)}
 .cdbox .alt a{color:var(--acc);font-weight:600;text-decoration:none;white-space:nowrap}
+.signup .su-lead{font-size:15px;line-height:1.4;margin-bottom:10px}
+.su-row{display:flex;gap:8px}
+.su-row input{flex:1;min-width:0;background:var(--night2);border:1.5px solid var(--line);color:var(--ink);border-radius:12px;padding:13px 14px;font:500 17px "DM Sans",system-ui,sans-serif;outline:none}
+.su-row input:focus{border-color:var(--acc)}
+.su-row button{flex:none;padding:0 18px;border:0;border-radius:12px;background:var(--acc);color:#1a2400;font:italic 900 19px "Barlow Condensed","Arial Narrow",Arial,sans-serif;text-transform:uppercase;cursor:pointer}
+.su-row button:disabled{opacity:.6}
+.su-tick{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:13.5px;line-height:1.4;color:var(--ink);cursor:pointer}
+.su-tick input{flex:none;width:20px;height:20px;margin:0;accent-color:var(--acc)}
+.su-msg{font-size:13px;color:var(--dim);margin-top:8px;min-height:0}
+.su-msg:empty{display:none}
+.su-msg.bad{color:#ff7a7a}
+.su-foot{font-size:12px;color:var(--dim);margin-top:10px;display:flex;justify-content:space-between;gap:10px}
+.su-foot a{color:var(--dim);white-space:nowrap}
+.su-done{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--dim)}
+.su-done b{color:var(--acc);font:italic 900 22px "Barlow Condensed","Arial Narrow",Arial,sans-serif;text-transform:uppercase}
+.su-done #suDoneTo{color:var(--ink);font-weight:600;overflow-wrap:anywhere}
+[hidden]{display:none!important}
 .foot{text-align:center;color:#5f6b78;font-size:11px;margin-top:26px;line-height:1.5}
 .crowd{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--dim)}
 .crowd b{color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600}
@@ -217,7 +234,7 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
     <p class="sub" id="archiveSub">Previous matches: catch up on the last week</p>
     <div id="archive" class="archive"></div>
-    <p class="foot">Friends &amp; family preview<br>Questions checked up to the end of 2025</p>
+    <p class="foot">Friends &amp; family preview<br>Questions checked up to the end of 2025<br>We count plays anonymously to improve the game: a random ID in your browser, never your name. If you sign up by email, it's used only to send you the game, never shared or sold, and you can unsubscribe at any time.</p>
   </section>
 
   <!-- PLAY -->
@@ -274,6 +291,20 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="share-hint" id="shareHint"></div>
       <div class="share-pre" id="sharePre" style="margin:10px 0 0"></div>
+    </div>
+    <div class="card signup" id="signupCard" hidden>
+      <h3><span>Next match in your inbox</span><span>Optional</span></h3>
+      <form id="suForm" novalidate>
+        <p class="su-lead">Get each day's match by email. One a day, nothing else.</p>
+        <div class="su-row">
+          <input id="suEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" placeholder="you@example.com" aria-label="Email address" enterkeyhint="send">
+          <button type="submit" id="suGo">Sign up</button>
+        </div>
+        <label class="su-tick"><input type="checkbox" id="suConsent"><span>Email me the daily LINEBREAK match. I can unsubscribe at any time.</span></label>
+        <div class="su-msg" id="suMsg" role="status" aria-live="polite"></div>
+        <div class="su-foot">Used only to send you the game. Never shared or sold. <a href="#" id="suNo">No thanks</a></div>
+      </form>
+      <div class="su-done" id="suDone" hidden><b>You're in ✓</b><span>The next match goes to</span><span id="suDoneTo"></span></div>
     </div>
     <div class="card table-ranks" id="ranksTable"><h3><span>The table</span><span>Metres</span></h3></div>
     <div class="next" id="nextInfo"></div>
@@ -677,6 +708,82 @@ const store={get(k,d){try{const v=localStorage.getItem('linebreak:'+k);return v?
 const SITE="https://cc81-pz.github.io/Linebreak/"; // the link every share points at
 const SHARE_URL = /claude/.test(location.hostname) || !/^https?:/.test(location.protocol) ? SITE : location.origin + location.pathname;
 
+/* ============ PLAY LOG + EMAIL SIGNUP ============
+   Sends finished matches, a few events and optional email signups to the LINEBREAK tables
+   (lb_plays, lb_events, lb_signups) in the SIXER Supabase project. Plays are anonymous: a random
+   id kept in this browser. The key is the public one: it can only call lb_submit_play,
+   lb_log_event and lb_signup, never read anything back.
+   Nothing is sent from the Claude preview, from a file on disk, or from a browser that has opened
+   the game once with ?notrack (use that on your own devices). Every call is fire-and-forget:
+   a network failure never touches the game. */
+const SB_URL='https://yueboqnjmzntatsbajyu.supabase.co', SB_KEY='sb_publishable_rBuS-0Dkzbh25bEqaerQkQ_e6qIcKpl';
+if(/[?&]notrack\b/.test(location.search)) store.set('notrack',true);
+const Track={
+  on: location.protocol==='https:' && !/claude|localhost|127\.0\.0\.1/.test(location.hostname) && !store.get('notrack',false),
+  id(){
+    let d=store.get('device',null);
+    if(!d){ d=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&3|8)).toString(16);}); store.set('device',d); }
+    return d;
+  },
+  rpc(fn,body){
+    return fetch(`${SB_URL}/rest/v1/rpc/${fn}`,{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)})
+      .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json().catch(()=>null); });
+  },
+  event(kind,matchNo){ if(!this.on) return; this.rpc('lb_log_event',{device:this.id(),kind,match_no:matchNo??null}).catch(()=>{}); },
+  // a finished match goes into an outbox first, so a dropped connection is retried on the next visit
+  play(g){
+    if(!this.on||!g||!g.results) return;
+    const p={device:this.id(),match_no:g.matchNo,metres:g.total,
+      answers:g.results.map((r,i)=>({q:i+1,qid:r.qid,answer:r.answer,tier:r.tier,metres:mOf(r.tier),fail:r.fail||null,secs:r.secs??null,wrong:(r.wrong||[]).slice(0,20)}))};
+    const q=store.get('outbox',[]); if(q.some(x=>x.match_no===p.match_no)) return;
+    q.push(p); store.set('outbox',q.slice(-20)); this.flush();
+  },
+  flush(){
+    if(!this.on||this._busy) return; const q=store.get('outbox',[]); if(!q.length) return; this._busy=true;
+    this.rpc('lb_submit_play',q[0])
+      .then(()=>{ store.set('outbox',store.get('outbox',[]).slice(1)); this._busy=false; this.flush(); })
+      .catch(()=>{ this._busy=false; });
+  }
+};
+Track.event('visit',MATCH_NO); Track.flush();
+// share, copy, WhatsApp and answer-sheet taps are picked up here, so the game's own buttons stay untouched
+document.addEventListener('click',e=>{
+  const t=e.target.closest&&e.target.closest('#shareBtn,#copyBtn,#waBtn,.sheet-btn'); if(!t||typeof G==='undefined'||!G) return;
+  Track.event({shareBtn:'share',copyBtn:'copy',waBtn:'whatsapp'}[t.id]||'sheet',G.matchNo);
+},true);
+
+/* Optional email card on the full-time screen. It sits below the share card, never blocks
+   anything, and once someone has signed up (or said no thanks) it gets out of the way. */
+const SIGNUP_CONSENT='Email me the daily LINEBREAK match. I can unsubscribe at any time.';
+const Signup={
+  render(matchNo){
+    const card=$('signupCard'); if(!card) return;
+    const done=store.get('signup',null), skip=store.get('signup-skip',0);
+    const hide=done || (skip && MATCH_NO<skip+7);
+    card.hidden=!!hide; if(hide) return;
+    this.matchNo=matchNo; $('suForm').hidden=false; $('suDone').hidden=true; $('suMsg').textContent=''; $('suMsg').className='su-msg';
+    if(!this._seen){ this._seen=true; Track.event('signup_view',matchNo); }
+  },
+  msg(t,bad){ const m=$('suMsg'); m.textContent=t; m.className='su-msg'+(bad?' bad':''); },
+  async submit(e){
+    e.preventDefault(); if(this._busy) return;
+    const em=$('suEmail').value.trim(), ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em) && em.length<=254;
+    if(!ok){ this.msg('That email doesn\'t look right.',true); $('suEmail').focus(); return; }
+    if(!$('suConsent').checked){ this.msg('Tick the box so we can email you.',true); return; }
+    if(!Track.on){ this.msg('Preview copy: nothing was sent. On the live site this signs you up.'); return; }
+    this._busy=true; const btn=$('suGo'); btn.disabled=true; btn.textContent='…';
+    let res=null;
+    try{ res=await Track.rpc('lb_signup',{email:em,device:Track.id(),match_no:this.matchNo??null,consent:true,consent_text:SIGNUP_CONSENT}); }catch(err){ res=null; }
+    this._busy=false; btn.disabled=false; btn.textContent='Sign up';
+    if(res==='ok'){
+      store.set('signup',{at:Date.now()}); Track.event('signup',this.matchNo);
+      $('suForm').hidden=true; $('suDone').hidden=false; $('suDoneTo').textContent=em.toLowerCase();
+    } else if(res==='invalid') this.msg('That email doesn\'t look right.',true);
+    else this.msg('Couldn\'t sign you up just now. Try again in a minute.',true);
+  },
+  skip(e){ e.preventDefault(); store.set('signup-skip',MATCH_NO); $('signupCard').hidden=true; }
+};
+
 /* ============ CROWD DATA ============
    DUMMY NUMBERS until the backend exists. Everything the UI shows about other
    players comes through this one object, shaped like the tables it will read:
@@ -807,6 +914,7 @@ function start(n){
     return;
   }
   G={mode:'daily',matchNo:n,matchIdx:matchIdx(n),qi:0,results:[],total:0};
+  Track.event('start',n);
   show('play'); startQ();
 }
 
@@ -871,6 +979,7 @@ function finishQ(i){
   let r;
   if(i===null){ const h=angleFor(q.id+':'+G.matchNo); r={qid:q.id,answer:null,tier:0,ang:h,fail:FAIL_KINDS[Math.round(h*180/Math.PI)%FAIL_KINDS.length]}; }
   else { const a=q.a[i]; r={qid:q.id,answer:a[0],tier:a[1],note:a[3]||'',ang:angleFor(a[0]+q.id)}; }
+  r.wrong=(G.misses||[]).slice(0,20); r.secs=Math.round(Q_SECS-Math.max(0,G.deadline-Date.now())/1000);
   const m=mOf(r.tier);
   G.results[G.qi]=r; G.total+=m; saveLive();
   animateRun(r);
@@ -1172,6 +1281,7 @@ function finishMatch(){
     const st=store.get('streak',{n:0,last:0});
     store.set('streak',{n: st.last===MATCH_NO-1 ? st.n+1 : (st.last===MATCH_NO? st.n : 1), last:MATCH_NO});
   }
+  Track.play(G);
   renderFT();
 }
 
@@ -1281,6 +1391,7 @@ function renderFT(){
   // countdown to the next match
   if(G.matchNo===MATCH_NO){ $('nextInfo').innerHTML=cdHTML('→'); cdStart(); }
   else { clearInterval(window._cd); $('nextInfo').textContent=`Catch-up match from ${dayDate(G.matchNo)}.`; }
+  Signup.render(G.matchNo);
 }
 
 /* Countdown to midnight, when the next match is released. Used on the home and full-time screens. */
@@ -1302,6 +1413,8 @@ document.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closes
 $('playDaily').onclick=()=>start(MATCH_NO);
 
 $('againBtn').onclick=()=>{ const n=G.matchNo; clearInterval(window._cd); store.set('day-'+n,null); store.set('live-'+n,null); start(n); };
+$('suForm').addEventListener('submit',e=>Signup.submit(e));
+$('suNo').addEventListener('click',e=>Signup.skip(e));
 $('homeBtn').onclick=()=>{ clearInterval(window._cd); show('home'); renderHome(); };
 // A day whose questions were replaced: drop any result saved against the old questions
 for(let n=1;n<=MATCH_NO;n++) ['day-','live-'].forEach(k=>{ const r=store.get(k+n,null); if(r && r.matchIdx!==undefined && r.matchIdx!==matchIdx(n)) store.set(k+n,null); });
