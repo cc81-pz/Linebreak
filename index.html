@@ -129,6 +129,15 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .wa{background:#25d366;color:#05300f;text-decoration:none;text-align:center}
 .next{text-align:center;color:var(--dim);font-size:14px;margin-top:16px}
 .next b{color:var(--ink);font-family:"IBM Plex Mono"}
+.cdbox{margin-top:16px;padding:16px 16px 14px;border:1px solid var(--line);border-radius:16px;background:var(--panel);text-align:center}
+.cdbox .lab{font:600 11px "IBM Plex Mono",monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.cdbox .clock{display:flex;justify-content:center;align-items:flex-start;gap:6px;margin-top:10px}
+.cdbox .u{width:64px}
+.cdbox .u b{display:block;font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-style:italic;font-weight:900;font-size:46px;line-height:.95;color:var(--ink);font-variant-numeric:tabular-nums}
+.cdbox .u span{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.cdbox .sep{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:900;font-size:34px;line-height:1.2;color:var(--dim);opacity:.6}
+.cdbox .alt{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;color:var(--dim)}
+.cdbox .alt a{color:var(--acc);font-weight:600;text-decoration:none;white-space:nowrap}
 .foot{text-align:center;color:#5f6b78;font-size:11px;margin-top:26px;line-height:1.5}
 .crowd{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--dim)}
 .crowd b{color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:600}
@@ -201,6 +210,7 @@ button,a.btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div id="dailyDone" class="done-note" style="display:none"></div>
     <button class="btn" id="playDaily">Kick off →</button>
     <p class="livecount" id="liveCount"></p>
+    <div id="homeCd"></div>
     <div id="statsWrap" style="display:none">
       <p class="sub">Your record</p>
       <div class="stats" id="stats"></div>
@@ -665,6 +675,7 @@ function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.t
 function renderHome(){
   const done=store.get('day-'+MATCH_NO,null), live=store.get('live-'+MATCH_NO,null);
   $('playDaily').textContent = done ? 'See today\'s scorecard →' : live ? `Resume Match #${MATCH_NO} →` : `Kick off: Match #${MATCH_NO} →`;
+  if(done){ $('homeCd').innerHTML=cdHTML('↓'); cdStart(); } else { $('homeCd').innerHTML=''; clearInterval(window._cd); }
   $('liveCount').innerHTML=`<i></i><b>${Crowd.players(MATCH_NO).toLocaleString('en-GB')}</b> players so far today`;
   const totals=[]; for(let n=1;n<=MATCH_NO;n++){ const r=store.get('day-'+n,null); if(r) totals.push(r.total); }
   $('statsWrap').style.display=totals.length?'block':'none';
@@ -1165,13 +1176,26 @@ function renderFT(){
   const rt=$('ranksTable'); rt.innerHTML='<h3><span>The table</span><span>Metres</span></h3>';
   const bands=['330–600','230–329','140–229','70–139','0–69'];
   RANKS.forEach((r,i)=>{ const d=document.createElement('div'); if(r===rk) d.className='me'; d.innerHTML=`<span>${r[1]}</span><span class="mono">${bands[i]}</span>`; rt.appendChild(d); });
-  // countdown
-  if(G.matchNo===MATCH_NO){
-    const upd=()=>{ const n=new Date(), m=new Date(n); m.setHours(24,0,0,0); const s=Math.floor((m-n)/1000);
-      $('nextInfo').innerHTML=`Next match in <b>${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}</b>`; };
-    upd(); clearInterval(window._cd); window._cd=setInterval(upd,1000);
-  } else { clearInterval(window._cd); $('nextInfo').textContent=`Catch-up match from ${dayDate(G.matchNo)}.`; }
+  // countdown to the next match
+  if(G.matchNo===MATCH_NO){ $('nextInfo').innerHTML=cdHTML('→'); cdStart(); }
+  else { clearInterval(window._cd); $('nextInfo').textContent=`Catch-up match from ${dayDate(G.matchNo)}.`; }
 }
+
+/* Countdown to midnight, when the next match is released. Used on the home and full-time screens. */
+function cdHTML(arrow){
+  let left=0; for(let n=MATCH_NO-1;n>=Math.max(1,MATCH_NO-7);n--) if(!store.get('day-'+n,null)) left++;
+  const alt=left ? `Don't want to wait? <a href="#archive" class="cdjump">Play an earlier day ${arrow}</a>` : `You've played every day so far. See you at kick-off.`;
+  const u=(k,l)=>`<div class="u"><b data-cd="${k}">00</b><span>${l}</span></div>`;
+  return `<div class="cdbox"><div class="lab">Next match in</div><div class="clock">${u('h','hours')}<div class="sep">:</div>${u('m','mins')}<div class="sep">:</div>${u('s','secs')}</div><div class="alt">${alt}</div></div>`;
+}
+function cdStart(){
+  const p=n=>String(n).padStart(2,'0');
+  const upd=()=>{ const n=new Date(), m=new Date(n); m.setHours(24,0,0,0); const s=Math.max(0,Math.floor((m-n)/1000)), v={h:p(Math.floor(s/3600)),m:p(Math.floor(s%3600/60)),s:p(s%60)};
+    document.querySelectorAll('[data-cd]').forEach(e=>{ e.textContent=v[e.dataset.cd]; }); };
+  upd(); clearInterval(window._cd); window._cd=setInterval(upd,1000);
+}
+document.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closest('.cdjump'); if(!a) return; e.preventDefault();
+  show('home'); renderHome(); const ar=$('archiveSub'); if(ar&&ar.scrollIntoView) ar.scrollIntoView({behavior:'smooth',block:'start'}); });
 
 $('playDaily').onclick=()=>start(MATCH_NO);
 
